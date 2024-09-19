@@ -4,10 +4,8 @@ import TemplateBuilder from './Builder/TemplateBuilder';
 
 function App() {
   return (
-    <div className='container mx-auto'>
-      Reminder: Use Slate JS
-
-
+    <div>
+      {/* Reminder: Use Slate JS */}
       <TemplateBuilder />
     </div>
   );
