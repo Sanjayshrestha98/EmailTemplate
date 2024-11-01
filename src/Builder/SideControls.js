@@ -49,7 +49,7 @@ function SideControls(props) {
   const [isDragging, setIsDragging] = useState(false);
 
   return (
-    <div className='w-2/5 h-full   border'>
+    <div className='w-2/5 border'>
       <div className="flex border-b">
         {tabs.map((tab, index) => (
           <button

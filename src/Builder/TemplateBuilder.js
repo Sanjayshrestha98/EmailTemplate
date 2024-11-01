@@ -13,7 +13,7 @@ function TemplateBuilder() {
             <div className='flex w-full py-2 px-4   bg-white border-b'>
                 <button className='mx-4 border text-sm p-1'>Back</button>
             </div>
-            <div className='flex  flex-1 w-full h-full'>
+            <div className='flex flex-1 w-full h-full'>
                 <BuilderProvider>
                     <DndContext >
                         {/* Droppable */}
