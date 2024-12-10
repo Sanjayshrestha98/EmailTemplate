@@ -10,7 +10,7 @@ function TemplateBuilder() {
 
     return (
         <div className='flex w-full flex-col h-full min-h-screen'>
-            <div className='flex w-full py-2 px-4   bg-white border-b'>
+            <div className='flex w-full py-2 px-4 sticky h-12 z-10 top-0 bg-white border-b'>
                 <button className='mx-4 border text-sm p-1'>Back</button>
             </div>
             <div className='flex flex-1 w-full h-full'>

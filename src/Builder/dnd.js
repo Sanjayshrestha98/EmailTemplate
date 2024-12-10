@@ -52,10 +52,6 @@ function DragAndDrop() {
         setHoveredList(null);
     };
 
-    console.log('hoveredList', hoveredList)
-    console.log('hoveredIndex', hoveredIndex)
-    console.log('draggedItem', draggedItem)
-    
     const { isOver, setNodeRef } = useDroppable({
         id: 'droppable',
     });

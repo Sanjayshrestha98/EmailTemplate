@@ -1,9 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import ParagraphElem from './Elements/ParagraphElem';
+import { BuilderContext } from '../context/BuilderContext';
 
-function SingleNode({ data }) {
+function SingleNode({ data, width }) {
 
-
+    console.log("SingleNode1 data", data)
+    const { rootState } = useContext(BuilderContext)
+    const styles = {
+        padding: `${data?.styles?.padding}px`,
+    }
 
     const renderElement = (type) => {
         switch (type) {
@@ -15,11 +20,15 @@ function SingleNode({ data }) {
 
     }
     return (
-        <td id='mp101-1' className='border bg-red-900 relative'  >
+        <div id='mp101-1-1' valign='top' className='border border-red-700 relative' style={{
+            ...styles,
+            backgroundColor: rootState?.contentAreaBackgroundColor,
+            width: width
+        }}>
 
             {renderElement(data?.type)}
 
-        </td>
+        </div>
     )
 }
 

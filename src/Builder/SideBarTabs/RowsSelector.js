@@ -1,24 +1,27 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { BuilderContext } from '../../context/BuilderContext';
+import { v1 as uuidv1 } from 'uuid';
 
 function RowsSelector() {
     const layouts = [
-        { id: 1, columns: 1, label: 'One Column' },
-        { id: 2, columns: 2, label: 'Two Columns' },
-        { id: 3, columns: 3, label: 'Three Columns' },
+        { id: uuidv1(), columns: 1, label: 'One Column', image: "/single.png", },
+        { id: uuidv1(), columns: 2, label: 'Two Columns', image: "/double.png" },
+        // { id: 3, columns: 3, label: 'Three Columns' },
     ];
+
+    const {rowsList, setRowsList} = useContext(BuilderContext)
 
     return (
         <div className="layout-selector">
-            <h3>Select Layout</h3>
-            {layouts.map(layout => (
-                <button
-                    key={layout.id}
-                    // onClick={() => addRow(layout.columns)}
-                    className="layout-button"
-                >
-                    {layout.label}
-                </button>
-            ))}
+            {/* <h3>Select Layout</h3> */}
+            <div className='grid gap-5'>
+                {layouts.map(layout => (
+                    <img src={layout.image} onClick={() => {
+                        setRowsList((prev)=>[ ...prev, layout] )
+                        console.log(layout)
+                    }} className='border w-full' /> 
+                ))}
+            </div>
         </div>
     )
 }
