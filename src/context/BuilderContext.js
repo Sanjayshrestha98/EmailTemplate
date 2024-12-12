@@ -153,7 +153,8 @@ const BuilderProvider = ({ children }) => {
     };
 
     const [rootState, rootStyleDispatch] = useReducer(rootReducer, loadStateFromLocalStorage());
-
+    const [selectedTab, setSelectedTab] = useState('content');
+    const [selectedNode, setSelectedNode] = useState(null);
     // Define the reducer function
     function rootReducer(state, action) {
         switch (action.type) {
@@ -190,7 +191,7 @@ const BuilderProvider = ({ children }) => {
     }, [rootState]);
 
     return (
-        <BuilderContext.Provider value={{ selectedRow, setSelectedRow, rootState, rootStyleDispatch, rowsList, setRowsList }}>
+        <BuilderContext.Provider value={{ selectedTab, setSelectedTab, selectedRow, setSelectedRow, rootState, rootStyleDispatch, rowsList, setRowsList, selectedNode, setSelectedNode }}>
             {children}
         </BuilderContext.Provider>
     );

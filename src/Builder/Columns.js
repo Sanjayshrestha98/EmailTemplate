@@ -2,7 +2,7 @@ import React from 'react'
 import SingleNode from './SingleNode'
 import { BuilderContext } from '../context/BuilderContext'
 
-function Columns({ data, width }) {
+function Columns({ data, width, rowid }) {
 
     console.log('columns', data)
     console.log('calculateWidth', width)
@@ -16,11 +16,11 @@ function Columns({ data, width }) {
             style={{
                 width: `${(rootState?.width / 12) * data?.span}px`
             }}
-            className={` relative hover:outline hover:outline-green-600 `}>
+            className={`  `}>
 
             {
                 data?.content?.map((value) => {
-                    return <SingleNode key={value?.id} data={value} width={`${(rootState?.width / 12) * data?.span}px`} />
+                    return <SingleNode rowid={rowid} key={value?.id} data={value} width={`${(rootState?.width / 12) * data?.span}px`} />
                 })
             }
         </td>

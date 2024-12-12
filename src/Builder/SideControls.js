@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import RowsSelector from './SideBarTabs/RowsSelector';
 import { DragOverlay, useDraggable } from '@dnd-kit/core';
 import Settings from './SideBarTabs/Settings';
+import { BuilderContext } from '../context/BuilderContext';
 
 function Draggable(props) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -20,6 +21,9 @@ function Draggable(props) {
   );
 }
 function SideControls(props) {
+
+  const { rootState, selectedTab, setSelectedTab, setSelectedRow, setSelectedNode } = useContext(BuilderContext)
+
   const items = [
     { label: 'TITLE', icon: 'T', id: "1" },
     { label: 'PARAGRAPH', icon: 'P', id: "2" },
@@ -38,9 +42,8 @@ function SideControls(props) {
     // { label: 'GIF', icon: 'G' },
   ];
 
-  const [selectedTab, setSelectedTab] = useState('Content');
 
-  const tabs = ['Content', 'Rows', 'Settings'];
+  const tabs = ['content', 'rows', 'settings'];
 
   // const { attributes, listeners, setNodeRef, transform } = useDraggable({
   //   id: 'draggable',
@@ -54,9 +57,13 @@ function SideControls(props) {
         {tabs.map((tab, index) => (
           <button
             key={index}
-            className={`py-2 px-4 text-sm font-medium focus:outline-none ${selectedTab === tab ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-600 hover:text-blue-500'
+            className={`py-2 px-4 text-sm font-medium capitalize focus:outline-none ${selectedTab === tab ? 'border-b-2 border-blue-500 text-blue-500' : 'text-gray-600 hover:text-blue-500'
               }`}
-            onClick={() => setSelectedTab(tab)}
+            onClick={() => {
+              setSelectedRow(null)
+              setSelectedNode(null)
+              setSelectedTab(tab)
+            }}
           >
             {tab}
           </button>
@@ -64,7 +71,7 @@ function SideControls(props) {
       </div>
 
       <div className="p-6">
-        {selectedTab === 'Content' && (
+        {selectedTab === 'content' && (
           <div className="grid grid-cols-3 gap-4">
 
             {items.map((item, index) => (
@@ -78,10 +85,10 @@ function SideControls(props) {
 
           </div>
         )}
-        {selectedTab === 'Rows' && (
+        {selectedTab === 'rows' && (
           <RowsSelector />
         )}
-        {selectedTab === 'Settings' && (
+        {selectedTab === 'settings' && (
           <Settings />
         )}
 

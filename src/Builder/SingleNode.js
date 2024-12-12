@@ -1,11 +1,15 @@
 import React, { useContext, useEffect } from 'react'
 import ParagraphElem from './Elements/ParagraphElem';
 import { BuilderContext } from '../context/BuilderContext';
+import { mouseOver } from '../utils/HoverToggle/MouseOver';
+import { mouseLeave } from '../utils/HoverToggle/MouseLeave';
 
-function SingleNode({ data, width }) {
+function SingleNode({ data, width, rowid }) {
 
-    console.log("SingleNode1 data", data)
-    const { rootState } = useContext(BuilderContext)
+    const { rootState, selectedNode, setSelectedRow, setSelectedNode, setSelectedTab } = useContext(BuilderContext)
+
+    console.log("selectedNode", selectedNode)
+
     const styles = {
         padding: `${data?.styles?.padding}px`,
     }
@@ -17,17 +21,34 @@ function SingleNode({ data, width }) {
             default:
                 break;
         }
-
     }
+
+    console.log('rowid', rowid)
+
     return (
-        <div id='mp101-1-1' valign='top' className='border border-red-700 relative' style={{
-            ...styles,
-            backgroundColor: rootState?.contentAreaBackgroundColor,
-            width: width
-        }}>
+        <div
+            onMouseOver={(e) => {
+                mouseOver(e, rowid)
+            }}
+            onMouseLeave={(e) => {
+                mouseLeave(e, rowid)
+            }}
+            id={data?.id}
+            onClick={(e) => {
+                e.stopPropagation();
+                setSelectedRow(null)
+                setSelectedNode(data)
+                setSelectedTab('content')
+            }}
+            valign='top' className={`${selectedNode && selectedNode?.id === data?.id ? 'outline' : ''} group relative hover:outline-2   outline-blue-600 -outline-offset-2 pointer-events-auto`} style={{
+                ...styles,
+                backgroundColor: rootState?.contentAreaBackgroundColor,
+                width: width
+            }}>
+
+            <div className='absolute top-0 text-xs bg-blue-600 right-0 w-fit px-2 group-hover:block hidden text-white capitalize'>{data?.type}</div>
 
             {renderElement(data?.type)}
-
         </div>
     )
 }
