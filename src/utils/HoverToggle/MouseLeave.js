@@ -5,7 +5,7 @@ export const mouseLeave = (e, parent) => {
     if (parent) {
         document.getElementById(e.target.id)?.classList.remove('hover:outline');
         if (!document.getElementById(parent)?.matches(':hover')) {
-            document.getElementById(parent)?.classList.add('hover:outline');
+            document.getElementById(parent)?.classList.add('hover:outline', "group/row");
         }
 
     } else {

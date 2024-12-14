@@ -18,10 +18,10 @@ function Rows({ data }) {
     <tr
       id={data?.id}
       onMouseOver={(e) => {
-        mouseOver(e, null)
+        mouseOver(e, null, "group/row")
       }}
       onMouseLeave={(e) => {
-        mouseLeave(e, null)
+        mouseLeave(e, null, "group/row")
       }}
       onClick={(e) => {
         e.stopPropagation();
@@ -29,10 +29,10 @@ function Rows({ data }) {
         setSelectedRow(data)
         setSelectedTab("rows")
       }}
-      className={`${selectedRow?.id === data?.id ? 'outline' : ''} group relative  outline-2 -outline-offset-2 outline-blue-700 `}>
-      <div className='absolute top-0 text-xs bg-blue-600 right-0 w-fit px-2 text-white group-hover:block hidden'>Row</div>
+      className={`${selectedRow?.id === data?.id ? 'outline' : ''} group/row relative  outline-2 -outline-offset-2 outline-blue-700 `}>
+      <div className='absolute top-0 text-xs bg-blue-600 right-0 w-fit px-2 text-white group-hover/row:block hidden'>Row</div>
       {
-        selectedRow?.id === data?.id && <><div className='absolute top-0 text-xs bg-blue-600 right-0 w-fit px-2 text-white  '>This is selected</div></>
+        selectedRow?.id && selectedRow?.id === data?.id && <><div className='absolute top-0 text-xs bg-blue-600 right-0 w-fit px-2 text-white  '>This is selected</div></>
       }
 
       <table align={rootState.alignment} border="0" cellPadding="0" cellSpacing="0" className="row-content"

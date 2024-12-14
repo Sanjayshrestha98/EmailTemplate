@@ -3,9 +3,13 @@ import { v1 as uuidv1 } from 'uuid';
 
 // Create a Context for the theme
 const BuilderContext = createContext();
+
 const inititalrowsList = [
     {
         id: uuidv1(),
+        styles: {
+            padding: 10,
+        },
         columns: [
             {
                 span: "12",
@@ -127,6 +131,8 @@ const inititalrowsList = [
         ]
     }
 ]
+
+
 // Create a Provider component
 const BuilderProvider = ({ children }) => {
     const [selectedRow, setSelectedRow] = useState(null);
