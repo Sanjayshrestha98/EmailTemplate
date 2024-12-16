@@ -57,7 +57,7 @@ function SideControls(props) {
         scrollbarWidth: "thin",
         // scrollbarGutter: "stable ="
       }}
-      className='w-2/5 border border-collapse max-h-screen sticky top-12 overflow-y-auto h-[calc(100vh-3rem)]'>
+      className='w-2/5 overscroll-contain border border-collapse max-h-screen sticky top-12 overflow-y-auto h-[calc(100vh-3rem)]'>
       <div className="flex border-b sticky top-0 bg-white z-10">
         {tabs.map((tab, index) => (
           <button

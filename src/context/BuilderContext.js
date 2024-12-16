@@ -19,12 +19,28 @@ const inititalrowsList = [
             applyImageTo: "row",
 
             // Border   
-            borderLeft: 0,
-            borderRight: 0,
-            borderTop: 0,
-            borderBottom: 0,
-            borderColor: '#000000',
-            borderType: 'solid',
+            borderLeft: {
+                type: "",
+                width: 0,
+                color: "#000000",
+            },
+            borderRight: {
+                type: "",
+                width: 0,
+                color: "#000000",
+            },
+            borderTop: {
+                type: "",
+                width: 0,
+                color: "#000000",
+            },
+            borderBottom: {
+                type: "",
+                width: 0,
+                color: "#000000",
+            },
+            // borderColor: '#000000',
+            // borderType: 'solid',
 
             borderRadiusTopLeft: 0,
             borderRadiusTopRight: 0,
@@ -186,24 +202,58 @@ const BuilderProvider = ({ children }) => {
     const [selectedRow, setSelectedRow] = useState(null);
     const [rowsList, setRowsList] = useState(JSON.parse(localStorage.getItem('rowsList')) || inititalrowsList);
 
+    // const handleRowStyleChange = (rowId, styleKey, value) => {
+    //     const updatedRows = rowsList?.map(row => {
+    //         if (row.id === rowId) {
+    //             // Update styles of the selected row
+    //             row.styles[styleKey] = value;
+    //             // Update styles of columns inside the selected row
+    //             // row.columns = row.columns.map(col => {
+    //             //     if (col.id === columnId) {
+    //             //         col.styles[styleKey] = value;
+    //             //     }
+    //             //     return col;
+    //             // });
+    //         }
+    //         return row;
+    //     });
+    //     localStorage.setItem('rowsList', JSON.stringify(updatedRows));
+    //     setRowsList(updatedRows);
+    // };
+
     const handleRowStyleChange = (rowId, styleKey, value) => {
         const updatedRows = rowsList?.map(row => {
             if (row.id === rowId) {
-                // Update styles of the selected row
-                row.styles[styleKey] = value;
-                // Update styles of columns inside the selected row
+                // Split the styleKey to handle nested objects (like 'borderLeft.width')
+                const keys = styleKey.split('.');  // Split the key by dot
+                if (keys.length === 1) {
+                    // If it's a single key (no nesting)
+                    row.styles[styleKey] = value;
+                } else {
+                    // If it's a nested key, iterate and update
+                    let currentObject = row.styles;
+                    for (let i = 0; i < keys.length - 1; i++) {
+                        currentObject = currentObject[keys[i]];  // Traverse to the correct nested object
+                    }
+                    currentObject[keys[keys.length - 1]] = value;  // Set the value to the final key
+                }
+
+                // If you need to update columns as well, you can do something similar
                 // row.columns = row.columns.map(col => {
                 //     if (col.id === columnId) {
                 //         col.styles[styleKey] = value;
                 //     }
                 //     return col;
                 // });
+
             }
             return row;
         });
         localStorage.setItem('rowsList', JSON.stringify(updatedRows));
         setRowsList(updatedRows);
     };
+
+
 
     // Define the initial state
     const initialRootContentState = {
