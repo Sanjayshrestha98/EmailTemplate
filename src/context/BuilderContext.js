@@ -8,12 +8,57 @@ const inititalrowsList = [
     {
         id: uuidv1(),
         styles: {
-            padding: 10,
+            // Background
+            backgroundColor: '#ffffff',
+            contentAreaBackgroundColor: '#ffffff',
+            hasBackgroundImage: false,
+            url: null,
+            backgroundRepeat: false,
+            backgroundFit: false,
+            backgroundCenter: false,
+            applyImageTo: "row",
+
+            // Border   
+            borderLeft: 0,
+            borderRight: 0,
+            borderTop: 0,
+            borderBottom: 0,
+            borderColor: '#000000',
+            borderType: 'solid',
+
+            borderRadiusTopLeft: 0,
+            borderRadiusTopRight: 0,
+            borderRadiusBottomLeft: 0,
+            borderRadiusBottomRight: 0,
+
+            // Layout
+            verticalAlign: 'top',
+
+            // Cards style
+            cellSpacing: 0,
+
+
         },
         columns: [
             {
-                span: "12",
                 id: uuidv1(),
+                styles: {
+
+                    backgroundColor: '#ffffff',
+
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+
+                    borderLeft: 0,
+                    borderRight: 0,
+                    borderTop: 0,
+                    borderBottom: 0,
+                    borderColor: '#000000',
+                    borderType: 'solid',
+                },
+                span: "12",
                 content: [
                     {
                         styles: {
@@ -132,11 +177,33 @@ const inititalrowsList = [
     }
 ]
 
+const applyChanges = (rowid, columnid, nodeid, type, payload) => {
+
+}
 
 // Create a Provider component
 const BuilderProvider = ({ children }) => {
     const [selectedRow, setSelectedRow] = useState(null);
-    const [rowsList, setRowsList] = useState(inititalrowsList);
+    const [rowsList, setRowsList] = useState(JSON.parse(localStorage.getItem('rowsList')) || inititalrowsList);
+
+    const handleRowStyleChange = (rowId, styleKey, value) => {
+        const updatedRows = rowsList?.map(row => {
+            if (row.id === rowId) {
+                // Update styles of the selected row
+                row.styles[styleKey] = value;
+                // Update styles of columns inside the selected row
+                // row.columns = row.columns.map(col => {
+                //     if (col.id === columnId) {
+                //         col.styles[styleKey] = value;
+                //     }
+                //     return col;
+                // });
+            }
+            return row;
+        });
+        localStorage.setItem('rowsList', JSON.stringify(updatedRows));
+        setRowsList(updatedRows);
+    };
 
     // Define the initial state
     const initialRootContentState = {
@@ -197,7 +264,19 @@ const BuilderProvider = ({ children }) => {
     }, [rootState]);
 
     return (
-        <BuilderContext.Provider value={{ selectedTab, setSelectedTab, selectedRow, setSelectedRow, rootState, rootStyleDispatch, rowsList, setRowsList, selectedNode, setSelectedNode }}>
+        <BuilderContext.Provider value={{
+            selectedTab,
+            setSelectedTab,
+            selectedRow,
+            setSelectedRow,
+            rootState,
+            rootStyleDispatch,
+            rowsList,
+            setRowsList,
+            selectedNode,
+            setSelectedNode,
+            handleRowStyleChange
+        }}>
             {children}
         </BuilderContext.Provider>
     );

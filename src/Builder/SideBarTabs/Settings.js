@@ -1,14 +1,13 @@
-import React, { useCallback, useContext, useReducer, useState } from 'react'
+import React, { useCallback, useContext, useMemo, useReducer, useState } from 'react'
 import { BuilderContext } from '../../context/BuilderContext'
 import _ from 'lodash';
-import { HexAlphaColorPicker, HexColorInput, HexColorPicker } from "react-colorful";
 import ColorPicker from '../../components/ColorPicker';
 
 function Settings() {
 
     const { rootState, rootStyleDispatch } = useContext(BuilderContext)
 
-    const [width, setWidth] = React.useState(rootState.width);
+    // const [width, setWidth] = React.useState(rootState.width);
 
     const getSliderValuePosition = useCallback((width) => {
         const min = 400;
@@ -23,10 +22,11 @@ function Settings() {
             shift = -8;
         }
 
+        console.log(`hanyo - calc(${percent}% + ${shift}px)`)
         return `calc(${percent}% + ${shift}px)`;
-    }, [width])
+    }, [rootState.width])
 
-    
+
     const debouncedSetInput = useCallback(
         _.debounce((payload, type) => {
             rootStyleDispatch({ type: type, payload: payload })
@@ -34,8 +34,12 @@ function Settings() {
         []
     );
 
+
+    const sliderPosition = useMemo(() => getSliderValuePosition(rootState.width), [rootState.width]);
+
+
     return (
-        <div className="p-2 rounded-md text-xs ">
+        <div className="p-4 rounded-md text-xs ">
             {/* <h2 className="text-gray-800 font-semibold mb-4">GENERAL OPTIONS</h2> */}
 
             {/* Content Area Width */}
@@ -45,22 +49,24 @@ function Settings() {
                     <div className='relative w-full h-12 flex justify-end'>
                         <div
                             className="absolute top-0 text-xs transform -translate-x-1/2 text-blue-500"
-                            style={{ left: getSliderValuePosition(width) }}
+                            style={{ left: sliderPosition }}
                         >
-                            {width}px
+                            {rootState.width}px
                         </div>
 
-                        <input type="range" min="400" max="900" className='w-full accent-blue-500' name="rootWidthControl" value={width} onChange={(e) => {
-                            setWidth(e.target.value)
-                            debouncedSetInput(e.target.value, "setWidth")
-                        }
-                        } />
+                        <input type="range" min="400" max="900" className='w-full accent-blue-500' name="rootWidthControl" value={rootState.width}
+                            onChange={(e) => {
+                                // setWidth(e.target.value)
+                                rootStyleDispatch({ type: 'setWidth', payload: e.target.value })
+                                // debouncedSetInput(e.target.value, "setWidth")
+                            }
+                            } />
                     </div>
                     {/* <span className="ml-2  text-blue-500">{rootState?.width}px</span> */}
                 </div>
             </div>
             {/* Content Area Alignment */}
-            <div className="mb-4">
+            <div className="mb-4 flex items-center justify-between">
                 <label className=" text-gray-700">Content area alignment</label>
                 <div className="flex mt-2 space-x-2">
                     <button
@@ -79,7 +85,7 @@ function Settings() {
             </div>
 
             {/* Background Color */}
-            <div className="mb-4">
+            <div className="mb-4 flex items-center justify-between">
                 <label className=" text-gray-700">Background color</label>
                 <div className='flex items-center gap-4 mt-2'>
                     <ColorPicker color={rootState?.backgroundColor} handleChange={debouncedSetInput} fieldName="setBackgroundColor" />
@@ -89,14 +95,14 @@ function Settings() {
                         onChange={(e) =>
                             debouncedSetInput(e.target.value, "setBackgroundColor")
                         }
-                        className="border p-2 rounded-md"
+                        className="border p-2 rounded-md w-24"
                     />
 
                 </div>
             </div>
 
             {/* Content Area Background Color */}
-            <div className="mb-4">
+            <div className="mb-4 flex items-center justify-between">
                 <label className=" text-gray-700">Content area background color</label>
                 <div className='flex items-center gap-4 mt-2'>
 
@@ -108,7 +114,7 @@ function Settings() {
                         onChange={(e) => {
                             debouncedSetInput(e.target.value, "setContentAreaBackgroundColor")
                         }}
-                        className="border p-2 rounded-md"
+                        className="border p-2 rounded-md w-24"
                     />
                     {/* <span>{rootState?.contentAreaBackgroundColor}</span> */}
 
@@ -208,15 +214,25 @@ function Settings() {
             </div> */}
 
             {/* Link Color */}
-            <div className="mb-4">
+            <div className="mb-4 flex items-center justify-between">
                 <label className=" text-gray-700">Link color</label>
-                <input
-                    type="color"
-                    value={rootState?.linkColor}
-                    onChange={(e) => debouncedSetInput(e.target.value, 'setLinkColor')}
-                    className="w-full h-10 mt-2 border rounded-md"
-                />
+                <div className='flex items-center gap-4 mt-2'>
+
+                    <ColorPicker color={rootState?.linkColor} handleChange={debouncedSetInput} fieldName="setContentAreaBackgroundColor" />
+
+                    <input
+                        type="text"
+                        value={rootState?.linkColor}
+                        onChange={(e) => {
+                            debouncedSetInput(e.target.value, "setLinkColor")
+                        }}
+                        className="border p-2 rounded-md w-24"
+                    />
+                    {/* <span>{rootState?.contentAreaBackgroundColor}</span> */}
+
+                </div>
             </div>
+
         </div>
     )
 }

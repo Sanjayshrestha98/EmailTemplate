@@ -3,10 +3,7 @@ import SingleNode from './SingleNode'
 import { BuilderContext } from '../context/BuilderContext'
 
 function Columns({ data, width, rowid }) {
-
-    console.log('columns', data)
-    console.log('calculateWidth', width)
-
+ 
     const { rootState } = React.useContext(BuilderContext)
 
     return (

@@ -8,8 +8,6 @@ function SingleNode({ data, width, rowid }) {
 
     const { rootState, selectedNode, setSelectedRow, setSelectedNode, setSelectedTab } = useContext(BuilderContext)
 
-    console.log("selectedNode", selectedNode)
-
     const styles = {
         padding: `${data?.styles?.padding}px`,
     }
@@ -22,8 +20,6 @@ function SingleNode({ data, width, rowid }) {
                 break;
         }
     }
-
-    console.log('rowid', rowid)
 
     return (
         <div
@@ -42,7 +38,7 @@ function SingleNode({ data, width, rowid }) {
             }}
             valign='top' className={`${selectedNode && selectedNode?.id === data?.id ? 'outline' : ''} group relative hover:outline-2   outline-blue-600 -outline-offset-2 pointer-events-auto`} style={{
                 ...styles,
-                backgroundColor: rootState?.contentAreaBackgroundColor,
+                // backgroundColor: rootState?.contentAreaBackgroundColor,
                 width: width
             }}>
 

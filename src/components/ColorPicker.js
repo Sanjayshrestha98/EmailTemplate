@@ -19,7 +19,7 @@ function ColorPicker({ color, handleChange, fieldName }) {
             ></button>
 
             {open && (
-                <div ref={divRef} className="absolute left-0 top-8 p-1 z-50">
+                <div ref={divRef} className="absolute focus:outline-none right-full border bg-white rounded-lg top-0 p-1 z-50">
                     <HexAlphaColorPicker
                         color={color}
                         onChange={(e) => { handleChange(e, fieldName); }}

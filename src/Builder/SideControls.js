@@ -52,8 +52,13 @@ function SideControls(props) {
   const [isDragging, setIsDragging] = useState(false);
 
   return (
-    <div className='w-2/5 border border-collapse max-h-screen sticky top-12 overflow-y-auto h-[calc(100vh-3rem)]'>
-      <div className="flex border-b">
+    <div
+      style={{
+        scrollbarWidth: "thin",
+        // scrollbarGutter: "stable ="
+      }}
+      className='w-2/5 border border-collapse max-h-screen sticky top-12 overflow-y-auto h-[calc(100vh-3rem)]'>
+      <div className="flex border-b sticky top-0 bg-white z-10">
         {tabs.map((tab, index) => (
           <button
             key={index}
@@ -70,9 +75,9 @@ function SideControls(props) {
         ))}
       </div>
 
-      <div className="p-6">
+      <div className=" ">
         {selectedTab === 'content' && (
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 p-4 gap-4">
 
             {items.map((item, index) => (
               <Draggable id={item.id} key={item.id} >

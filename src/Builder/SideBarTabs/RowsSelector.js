@@ -19,13 +19,12 @@ function RowsSelector() {
                     <SingleRowSetting />
                 )
                     :
-                    <div className="">
+                    <div className="p-4">
                         {/* <h3>Select Layout</h3> */}
                         <div className='grid gap-5'>
                             {layouts.map(layout => (
                                 <img src={layout.image} onClick={() => {
                                     setRowsList((prev) => [...prev, layout])
-                                    // console.log(layout)
                                 }} className='border w-full' />
                             ))}
                         </div>

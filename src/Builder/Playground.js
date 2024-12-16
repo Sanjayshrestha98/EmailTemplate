@@ -1,9 +1,10 @@
 
-import React from 'react'
+import React, { Suspense } from 'react'
 import Rows from './Rows'
 import { BuilderContext } from '../context/BuilderContext'
 import { mouseOver } from '../utils/HoverToggle/MouseOver'
 import { mouseLeave } from '../utils/HoverToggle/MouseLeave'
+const LazyRow = React.lazy(() => import('./Rows'));
 
 function Playground() {
 
@@ -22,7 +23,7 @@ function Playground() {
 
   return (
     <div className='w-full p-4 transition-all duration-300 ease-in-out pt-1'>
- 
+
       <table
         border="0"
         fixed
@@ -31,12 +32,15 @@ function Playground() {
 
         width="100%" cellPadding="0" cellSpacing="0" className="nl-container" role="presentation">
         <tbody>
-          {
-            rowsList.map((value) => {
-              return <Rows key={value.id} data={value} />
-            })
-          }
-          <Rows />
+          <Suspense fallback={<div>Loading Row...</div>}>
+            {
+              rowsList.map((value) => {
+                return (
+                  <LazyRow key={value.id} data={value} />
+                )
+              })
+            }
+          </Suspense>
         </tbody>
       </table>
 
