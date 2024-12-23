@@ -30,14 +30,16 @@ const Rows = React.memo(({ data }) => {
     backgroundRepeat: data?.styles?.backgroundRepeat ? 'repeat' : 'no-repeat',
     backgroundImage: (data?.styles?.hasBackgroundImage && data?.styles?.applyImageTo === "cell") && `url(${data?.styles?.url})`,
     backgroundColor: `${data?.styles?.contentAreaBackgroundColor}`,
-    borderLeft: `${data?.styles?.borderLeft}px ${data?.styles?.borderType} ${data?.styles?.borderColor}`,
-    borderRight: `${data?.styles?.borderRight}px ${data?.styles?.borderType} ${data?.styles?.borderColor}`,
-    borderTop: `${data?.styles?.borderTop}px ${data?.styles?.borderType} ${data?.styles?.borderColor}`,
-    borderBottom: `${data?.styles?.borderBottom}px ${data?.styles?.borderType} ${data?.styles?.borderColor}`,
-    borderRadiusTopLeft: `${data?.styles?.borderRadiusTopLeft}px`,
-    borderRadiusTopRight: `${data?.styles?.borderRadiusTopRight}px`,
-    borderRadiusBottomLeft: `${data?.styles?.borderRadiusBottomLeft}px`,
-    borderRadiusBottomRight: `${data?.styles?.borderRadiusBottomRight}px`,
+
+    borderLeft: `${data?.styles?.borderLeft.width}px ${data?.styles?.borderLeft.type} ${data?.styles?.borderLeft.color}`,
+    borderRight: `${data?.styles?.borderRight.width}px ${data?.styles?.borderRight.type} ${data?.styles?.borderRight.color}`,
+    borderTop: `${data?.styles?.borderTop.width}px ${data?.styles?.borderTop.type} ${data?.styles?.borderTop.color}`,
+    borderBottom: `${data?.styles?.borderBottom.width}px ${data?.styles?.borderBottom.type} ${data?.styles?.borderBottom.color}`,
+
+    'border-top-left-radius': `${data?.styles?.borderRadiusTopLeft}px`,
+    'border-top-right-radius': `${data?.styles?.borderRadiusTopRight}px`,
+    'border-bottom-left-radius': `${data?.styles?.borderRadiusBottomLeft}px`,
+    'border-bottom-right-radius': `${data?.styles?.borderRadiusBottomRight}px`,
 
   }
 
@@ -76,7 +78,7 @@ const Rows = React.memo(({ data }) => {
       // width={rootState.width}
       >
         <tbody>
-          <tr style={contentAreaStyles} >
+          <div style={contentAreaStyles} >
 
             {
               data?.columns?.map((value) => {
@@ -85,7 +87,7 @@ const Rows = React.memo(({ data }) => {
                 )
               })
             }
-          </tr>
+          </div>
         </tbody>
       </table>
     </tr>

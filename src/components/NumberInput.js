@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-function NumberInput({ max, min, step, onChange }) {
+function NumberInput({ max, min, step, onChange, defaultValue }) {
 
-    const [number, setNumber] = useState(0);
+    const [number, setNumber] = useState(defaultValue || 0);
 
     const handleIncrement = () => {
         if (number < max) {

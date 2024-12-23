@@ -20,25 +20,27 @@ const inititalrowsList = [
 
             // Border   
             borderLeft: {
-                type: "",
+                type: "none",
                 width: 0,
                 color: "#000000",
             },
             borderRight: {
-                type: "",
+                type: "none",
                 width: 0,
                 color: "#000000",
             },
             borderTop: {
-                type: "",
+                type: "none",
                 width: 0,
                 color: "#000000",
             },
             borderBottom: {
-                type: "",
+                type: "none",
                 width: 0,
                 color: "#000000",
             },
+            advancedBorder: false,
+            advancedRadius: false,
             // borderColor: '#000000',
             // borderType: 'solid',
 

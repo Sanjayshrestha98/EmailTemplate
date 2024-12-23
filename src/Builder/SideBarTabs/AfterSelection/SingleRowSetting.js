@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import Accordion from '../../../components/Accordion'
 import Backgrounds from './RowProperties/Backgrounds'
-import Borders from './RowProperties/Borders'
 import Layout from './RowProperties/Layout'
 import Cardstyle from './RowProperties/Cardstyle'
 import ColumnStructure from './RowProperties/ColumnStructure'
 import { BuilderContext } from '../../../context/BuilderContext'
 import { X } from 'lucide-react'
+import Borders from './RowProperties/RowBorder/Borders'
 
 function SingleRowSetting() {
 
