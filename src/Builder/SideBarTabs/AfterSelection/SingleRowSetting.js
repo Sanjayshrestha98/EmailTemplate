@@ -12,8 +12,6 @@ function SingleRowSetting() {
 
     const { selectedRow, setSelectedRow } = useContext(BuilderContext)
 
-    console.log('selectedRow', selectedRow)
-
     return (
         <div>
 

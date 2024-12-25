@@ -22,7 +22,6 @@ function Settings() {
             shift = -8;
         }
 
-        console.log(`hanyo - calc(${percent}% + ${shift}px)`)
         return `calc(${percent}% + ${shift}px)`;
     }, [rootState.width])
 

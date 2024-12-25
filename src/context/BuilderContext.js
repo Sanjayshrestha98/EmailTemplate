@@ -4,6 +4,28 @@ import { v1 as uuidv1 } from 'uuid';
 // Create a Context for the theme
 const BuilderContext = createContext();
 
+const newEmptyColumn = {
+    // id: uuidv1(),
+    styles: {
+
+        backgroundColor: '#ffffff',
+
+        paddingTop: 0,
+        paddingBottom: 0,
+        paddingLeft: 0,
+        paddingRight: 0,
+
+        borderLeft: 0,
+        borderRight: 0,
+        borderTop: 0,
+        borderBottom: 0,
+        borderColor: '#000000',
+        borderType: 'solid',
+    },
+    span: "1",
+    content: []
+}
+
 const inititalrowsList = [
     {
         id: uuidv1(),
@@ -435,26 +457,6 @@ const BuilderProvider = ({ children }) => {
     const [selectedRow, setSelectedRow] = useState(null);
     const [rowsList, setRowsList] = useState(JSON.parse(localStorage.getItem('rowsList')) || inititalrowsList);
 
-    // const handleRowStyleChange = (rowId, styleKey, value) => {
-    //     const updatedRows = rowsList?.map(row => {
-    //         if (row.id === rowId) {
-    //             // Update styles of the selected row
-    //             row.styles[styleKey] = value;
-    //             // Update styles of columns inside the selected row
-    //             // row.columns = row.columns.map(col => {
-    //             //     if (col.id === columnId) {
-    //             //         col.styles[styleKey] = value;
-    //             //     }
-    //             //     return col;
-    //             // });
-    //         }
-    //         return row;
-    //     });
-    //     localStorage.setItem('rowsList', JSON.stringify(updatedRows));
-    //     setRowsList(updatedRows);
-    // };
-
-
     const handleRowStyleChange = (rowId, styleKey, value) => {
         const updatedRows = rowsList?.map(row => {
             if (row.id === rowId) {
@@ -471,15 +473,6 @@ const BuilderProvider = ({ children }) => {
                     }
                     currentObject[keys[keys.length - 1]] = value;  // Set the value to the final key
                 }
-
-                // If you need to update columns as well, you can do something similar
-                // row.columns = row.columns.map(col => {
-                //     if (col.id === columnId) {
-                //         col.styles[styleKey] = value;
-                //     }
-                //     return col;
-                // });
-
             }
             return row;
         });
@@ -487,7 +480,114 @@ const BuilderProvider = ({ children }) => {
         setRowsList(updatedRows);
     };
 
+    function handleColumnStyleChange(rowId, columnId, newStyle, value) {
+        setRowsList(prevRows => {
+            const updatedRows = prevRows.map(row => {
+                if (row.id === rowId) {
+                    return {
+                        ...row,
+                        columns: row.columns.map(column => {
+                            if (column.id === columnId) {
+                                if (newStyle === 'span') {
+                                    return {
+                                        ...column,
+                                        [newStyle]: value
+                                    };
+                                }
+                                return {
+                                    ...column,
+                                    style: {
+                                        ...column.style,
+                                        [newStyle]: value
+                                    }
+                                };
+                            }
+                            return column;
+                        })
+                    };
+                }
+                return row;
+            });
 
+            // Update localStorage
+            localStorage.setItem('rowsList', JSON.stringify(updatedRows));
+
+            return updatedRows;
+        });
+    }
+
+    const handleAddColumn = (rowId) => {
+        const updatedRows = rowsList?.map((row, index) => {
+            if (row.id === rowId) {
+                const newColumn = { ...newEmptyColumn, id: uuidv1() };
+
+                // Check if the column at `index` can reduce its span
+                if (row.columns[index].span > 1) {
+                    row.columns[index].span -= 1;
+                    row.columns.splice(index + 1, 0, newColumn); // Insert after the current index
+                } else {
+                    console.warn("Cannot add a new column. Column span is insufficient.");
+                }
+            }
+            return row;
+        });
+
+        localStorage.setItem("rowsList", JSON.stringify(updatedRows));
+        setRowsList(updatedRows);
+    };
+
+    const handleDeleteColumn = (rowId, columnId) => {
+        const updatedRows = rowsList?.map(row => {
+            if (row.id === rowId) {
+                const columnIndex = row.columns.findIndex(col => col.id === columnId);
+    
+                // Ensure the column exists
+                if (columnIndex !== -1) {
+                    // Ensure the row has more than one column
+                    if (row.columns.length > 1) {
+                        // Convert span to a number for calculations
+                        const removedSpan = parseInt(row.columns[columnIndex].span, 10);
+    
+                        // Adjust the span of the adjacent column
+                        if (columnIndex > 0) {
+                            // Add the removed span to the previous column
+                            row.columns[columnIndex - 1].span = (
+                                parseInt(row.columns[columnIndex - 1].span, 10) + removedSpan
+                            ).toString();
+                        } else if (columnIndex < row.columns.length - 1) {
+                            // Add the removed span to the next column if it's the first column being deleted
+                            row.columns[columnIndex + 1].span = (
+                                parseInt(row.columns[columnIndex + 1].span, 10) + removedSpan
+                            ).toString();
+                        }
+    
+                        // Remove the column
+                        row.columns.splice(columnIndex, 1);
+                    } else {
+                        console.warn("Cannot delete column. A row must have at least one column.");
+                    }
+                } else {
+                    console.warn("Column with the specified ID not found.");
+                }
+            }
+            return row;
+        });
+
+        localStorage.setItem("rowsList", JSON.stringify(updatedRows));
+        setRowsList(updatedRows);
+    };
+
+    // function handleAddColumn(rowId, index) {
+    //     const updatedRows = rowsList?.map(row => {
+    //         if (row.id === rowId) {
+    //             const newColumn = { ...newEmptyColumn };
+    //             row.columns.splice(index, 0, newColumn);
+    //         }
+    //         return row;
+    //     });
+    //     localStorage.setItem('rowsList', JSON.stringify(updatedRows));
+    //     setRowsList(updatedRows);
+    // }
 
     // Define the initial state
     const initialRootContentState = {
@@ -559,7 +659,10 @@ const BuilderProvider = ({ children }) => {
             setRowsList,
             selectedNode,
             setSelectedNode,
-            handleRowStyleChange
+            handleRowStyleChange,
+            handleColumnStyleChange,
+            handleAddColumn,
+            handleDeleteColumn
         }}>
             {children}
         </BuilderContext.Provider>

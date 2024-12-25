@@ -10,8 +10,6 @@ function Playground() {
 
   const { rootState, rowsList, selectedRow } = React.useContext(BuilderContext)
 
-  console.log('rowsList', rowsList)
-
   const rootStyles = {
     backgroundColor: rootState?.backgroundColor,
     backgroundImage: `url(${rootState?.hasBackgroundImage && rootState?.url})`,

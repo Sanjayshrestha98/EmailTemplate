@@ -11,14 +11,10 @@ function Backgrounds() {
     _.debounce((payload, type) => {
       if (selectedRow) {
         handleRowStyleChange(selectedRow.id, type, payload)
-        console.log(payload, type)
       }
     }, 500), // 500ms debounce delay
     [selectedRow]
   );
-
-  console.log('selectedRow', selectedRow.styles)
-
 
   return (
     <div className="p-2 rounded-md text-xs ">

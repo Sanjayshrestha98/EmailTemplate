@@ -23,7 +23,7 @@ const Accordion = ({ title, children, className, defaultOpen }) => {
 
             {/* Content Section */}
             {isOpen && (
-                <div className="p-2 bg-white text-gray-700 ">
+                <div className="bg-white text-gray-700 ">
                     {children}
                 </div>
             )}

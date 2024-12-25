@@ -13,8 +13,6 @@ function Borders() {
   const [showAllBorderSides, setShowAllBorderSides] = useState(selectedRow?.styles?.advancedBorder);
   const [showAllRadiusSides, setShowAllRadiusSides] = useState(selectedRow?.styles?.advancedRadius);
 
-  console.log('selectedRow Styles', selectedRow.styles)
-
   const handleAllSidesBorderChange = useCallback(() => {
     const sides = ['borderRight', 'borderTop', 'borderBottom']
     sides.forEach(side => {
