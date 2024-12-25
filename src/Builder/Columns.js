@@ -2,13 +2,13 @@ import React from 'react'
 import SingleNode from './SingleNode'
 import { BuilderContext } from '../context/BuilderContext'
 
-function Columns({ data, width, rowid }) {
+function Columns({ data, rowStyles, rowid }) {
  
     const { rootState } = React.useContext(BuilderContext)
 
     return (
         <td
-            valign='top'
+            valign={rowStyles?.verticalAlign}
             id='mp101-1'
             style={{
                 width: `${(rootState?.width / 12) * data?.span}px`

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react'
+import React, { useContext } from 'react'
 import { BuilderContext } from '../context/BuilderContext';
 import { mouseOver } from '../utils/HoverToggle/MouseOver';
 import { mouseLeave } from '../utils/HoverToggle/MouseLeave';
@@ -8,19 +8,6 @@ const Columns = React.lazy(() => import('./Columns'));
 const Rows = React.memo(({ data }) => {
 
   const { rootState, selectedRow, setSelectedRow, setSelectedTab, setSelectedNode } = useContext(BuilderContext)
-
-  const [styles, setStyles] = useState(data.styles)
-  const calculateWidth = (span) => {
-    return (rootState?.width / 12) * span;
-  };
-
-  // useEffect(() => {
-  //   if (selectedRow?.id === data?.id) {
-
-  //   }
-  // }, [selectedRow?.id])
-
-  console.log('dataaa', data?.id, data.styles)
 
   const contentAreaStyles = {
     padding: `${data?.styles?.padding}px`,
@@ -59,6 +46,8 @@ const Rows = React.memo(({ data }) => {
         setSelectedTab("rows")
       }}
 
+      valign={data?.styles?.verticalAlign}
+
       style={{
         backgroundColor: `${data?.styles?.backgroundColor}`,
         backgroundImage: (data?.styles?.hasBackgroundImage && data?.styles?.applyImageTo === "row") && `url(${data?.styles?.url})`,
@@ -83,10 +72,11 @@ const Rows = React.memo(({ data }) => {
             {
               data?.columns?.map((value) => {
                 return (
-                  <Columns key={value?.id} data={value} width={calculateWidth(value?.span)} rowid={data?.id} />
+                  <Columns key={value?.id} data={value} rowStyles={data?.styles} rowid={data?.id} />
                 )
               })
             }
+
           </div>
         </tbody>
       </table>

@@ -88,18 +88,7 @@ function Borders() {
       }
 
 
-      {/* 
-      {   
-    
-     
-    "borderRadiusTopLeft": 0,
-    "borderRadiusTopRight": 0,
-    "borderRadiusBottomLeft": 0,
-    "borderRadiusBottomRight": 0,
-    "verticalAlign": "top",
-    "cellSpacing": 0,
    
-} */}
 
 
 

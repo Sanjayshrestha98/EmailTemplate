@@ -41,8 +41,6 @@ const inititalrowsList = [
             },
             advancedBorder: false,
             advancedRadius: false,
-            // borderColor: '#000000',
-            // borderType: 'solid',
 
             borderRadiusTopLeft: 0,
             borderRadiusTopRight: 0,
@@ -112,10 +110,227 @@ const inititalrowsList = [
     },
     {
         id: uuidv1(),
+        styles: {
+            // Background
+            backgroundColor: '#ffffff',
+            contentAreaBackgroundColor: '#ffffff',
+            hasBackgroundImage: false,
+            url: null,
+            backgroundRepeat: false,
+            backgroundFit: false,
+            backgroundCenter: false,
+            applyImageTo: "row",
+
+            // Border   
+            borderLeft: {
+                type: "none",
+                width: 0,
+                color: "#000000",
+            },
+            borderRight: {
+                type: "none",
+                width: 0,
+                color: "#000000",
+            },
+            borderTop: {
+                type: "none",
+                width: 0,
+                color: "#000000",
+            },
+            borderBottom: {
+                type: "none",
+                width: 0,
+                color: "#000000",
+            },
+            advancedBorder: false,
+            advancedRadius: false,
+
+            borderRadiusTopLeft: 0,
+            borderRadiusTopRight: 0,
+            borderRadiusBottomLeft: 0,
+            borderRadiusBottomRight: 0,
+
+            // Layout
+            verticalAlign: 'top',
+
+            // Cards style
+            cellSpacing: 0,
+
+
+        },
+        columns: [
+            {
+                id: uuidv1(),
+                styles: {
+                    backgroundColor: '#ffffff',
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    borderLeft: 0,
+                    borderRight: 0,
+                    borderTop: 0,
+                    borderBottom: 0,
+                    borderColor: '#000000',
+                    borderType: 'solid',
+                },
+                span: "6",
+                content: [
+                    {
+                        styles: {
+                            padding: 10,
+                            margin: 0,
+                        },
+                        id: uuidv1(),
+                        type: 'paragraph',
+                        content: `
+              <p>
+                This is 0,0. It has support for a document, with paragraphs and text. That’s it. It’s probably too much for real minimalists though.
+                This is 0,0. It has support for a document, with paragraphs and text. That’s it. It’s probably too much for real minimalists though.
+                This is 0,0. It has support for a document, with paragraphs and text. That’s it. It’s probably too much for real minimalists though.
+                This is 0,0. It has support for a document, with paragraphs and text. That’s it. It’s probably too much for real minimalists though.
+              </p>  ` },
+                    {
+                        styles: {
+                            padding: 10,
+                            margin: 0,
+                        },
+                        id: uuidv1(),
+                        type: 'paragraph',
+                        content: `
+              <p>
+                This is a 0,1 reduced version of Tiptap. It has support for a document, with paragraphs and text. That’s it. It’s probably too much for real minimalists though.
+              </p>
+              <p>
+                The paragraph extension is not really required, but you need at least one node. Sure, that node can be something different.
+              </p>
+            `
+                    },
+                ]
+
+            },
+            {
+                id: uuidv1(),
+                styles: {
+
+                    backgroundColor: '#ffffff',
+
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+
+                    borderLeft: 0,
+                    borderRight: 0,
+                    borderTop: 0,
+                    borderBottom: 0,
+                    borderColor: '#000000',
+                    borderType: 'solid',
+                },
+                span: "6",
+                content: [
+                    {
+                        styles: {
+                            padding: 10,
+                            margin: 0,
+                        },
+                        id: uuidv1(),
+                        type: 'paragraph',
+                        content: `
+              <p>
+                This is 0,0. It has support for a document, with paragraphs and text. That’s it. It’s probably too much for real minimalists though.
+              </p>  ` },
+                    {
+                        styles: {
+                            padding: 10,
+                            margin: 0,
+                        },
+                        id: uuidv1(),
+                        type: 'paragraph',
+                        content: `
+              <p>
+                This is a 0,1 reduced version of Tiptap. It has support for a document, with paragraphs and text. That’s it. It’s probably too much for real minimalists though.
+              </p>
+              <p>
+                The paragraph extension is not really required, but you need at least one node. Sure, that node can be something different.
+              </p>
+            `
+                    },
+                ]
+
+            },
+        ]
+    },
+    {
+        id: uuidv1(),
+        styles: {
+            // Background
+            backgroundColor: '#ffffff',
+            contentAreaBackgroundColor: '#ffffff',
+            hasBackgroundImage: false,
+            url: null,
+            backgroundRepeat: false,
+            backgroundFit: false,
+            backgroundCenter: false,
+            applyImageTo: "row",
+
+            // Border   
+            borderLeft: {
+                type: "none",
+                width: 0,
+                color: "#000000",
+            },
+            borderRight: {
+                type: "none",
+                width: 0,
+                color: "#000000",
+            },
+            borderTop: {
+                type: "none",
+                width: 0,
+                color: "#000000",
+            },
+            borderBottom: {
+                type: "none",
+                width: 0,
+                color: "#000000",
+            },
+            advancedBorder: false,
+            advancedRadius: false,
+
+            borderRadiusTopLeft: 0,
+            borderRadiusTopRight: 0,
+            borderRadiusBottomLeft: 0,
+            borderRadiusBottomRight: 0,
+
+            // Layout
+            verticalAlign: 'top',
+
+            // Cards style
+            cellSpacing: 0,
+
+
+        },
         columns: [
             {
                 span: "6",
                 id: uuidv1(),
+                styles: {
+
+                    backgroundColor: '#ffffff',
+
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+
+                    borderLeft: 0,
+                    borderRight: 0,
+                    borderTop: 0,
+                    borderBottom: 0,
+                    borderColor: '#000000',
+                    borderType: 'solid',
+                },
                 content: [
                     {
                         styles: {
@@ -155,6 +370,22 @@ const inititalrowsList = [
             {
                 span: "6",
                 id: uuidv1(),
+                styles: {
+
+                    backgroundColor: '#ffffff',
+
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+
+                    borderLeft: 0,
+                    borderRight: 0,
+                    borderTop: 0,
+                    borderBottom: 0,
+                    borderColor: '#000000',
+                    borderType: 'solid',
+                },
                 content: [
                     {
                         styles: {
@@ -222,6 +453,7 @@ const BuilderProvider = ({ children }) => {
     //     localStorage.setItem('rowsList', JSON.stringify(updatedRows));
     //     setRowsList(updatedRows);
     // };
+
 
     const handleRowStyleChange = (rowId, styleKey, value) => {
         const updatedRows = rowsList?.map(row => {
