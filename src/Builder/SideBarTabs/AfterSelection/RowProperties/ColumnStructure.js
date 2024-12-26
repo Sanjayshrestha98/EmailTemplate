@@ -1,141 +1,113 @@
-
-// function ColumnStructure() {
-
-
-//   return (
-//     <div>
-//       <div>
-//         {
-//           selectedRow?.columns.map((column, index) => {
-//             return (
-//               // <Columns key={column.id} data={column} rowStyles={selectedRow.styles} rowid={selectedRow.id} />
-//               <div key={column.id}>
-//                 <label>Column {index + 1}</label>
-//                 <input type="range" min="1" max="12"
-//                   onChange={(e) =>
-//                     handleColumnStyleChange(selectedRow.id, column.id, 'span', e.target.value)}
-//                 />
-//                 <span>{column.span}</span>
-//               </div>
-//             )
-//           })
-//         }
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default ColumnStructure
-
 import React, { useEffect, useState } from "react";
 import { GripVertical } from "lucide-react";
-import { BuilderContext } from '../../../../context/BuilderContext'
+import { BuilderContext } from "../../../../context/BuilderContext";
 import ColumnProperties from "../ColumnProperties/ColumnProperties";
-import { use } from "react";
 
 const ColumnStructure = () => {
-  const { selectedRow, handleColumnStyleChange,handleAddColumn } = React.useContext(BuilderContext)
-  console.log('selectedRow', selectedRow)
+  const { selectedRow, handleColumnStyleChange, handleAddColumn } = React.useContext(BuilderContext);
 
-  useEffect(() => {
-    setColumns(selectedRow?.columns);
-    setActiveColumn(selectedRow?.columns[0]);
-  }, [selectedRow]);
-
-  const [columns, setColumns] = useState(selectedRow?.columns);
+  const [columns, setColumns] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
-  const [activeColumn, setActiveColumn] = useState(selectedRow?.columns[0]);
+  const [activeColumn, setActiveColumn] = useState(null);
   const [dragIndex, setDragIndex] = useState(null);
   const [initialX, setInitialX] = useState(0);
   const [initialSpans, setInitialSpans] = useState({});
+
+  useEffect(() => {
+    setColumns(selectedRow?.columns || []);
+    setActiveColumn(selectedRow?.columns?.[0] || null);
+  }, [selectedRow]);
 
   const handleMouseDown = (e, index) => {
     setIsDragging(true);
     setDragIndex(index);
     setInitialX(e.clientX);
     setInitialSpans({
-      col1: columns[index].span,
-      col2: columns[index + 1].span,
+      col1: parseInt(columns[index].span, 10),
+      col2: parseInt(columns[index + 1].span, 10),
     });
   };
 
   const handleMouseMove = (e) => {
-    if (isDragging) {
-      const deltaX = e.clientX - initialX;
-      const deltaSpan = Math.round(deltaX / 10); // Adjust sensitivity
-      const col1Span = Math.max(1, Math.min(12, initialSpans.col1 + deltaSpan));
-      const col2Span = Math.max(1, Math.min(12, initialSpans.col2 - deltaSpan));
+    if (!isDragging || dragIndex === null) return;
 
-      if (col1Span + col2Span === initialSpans.col1 + initialSpans.col2) {
-        const updatedColumns = [...columns];
-        updatedColumns[dragIndex].span = col1Span;
-        updatedColumns[dragIndex + 1].span = col2Span;
-        setColumns(updatedColumns);
-      }
+    const deltaX = e.clientX - initialX;
+    const deltaSpan = Math.round(deltaX / 20); // Adjust sensitivity for dragging
+    const col1Span = Math.max(1, Math.min(12, initialSpans.col1 + deltaSpan));
+    const col2Span = Math.max(1, Math.min(12, initialSpans.col2 - deltaSpan));
+
+    // Ensure total span remains constant
+    if (col1Span + col2Span === initialSpans.col1 + initialSpans.col2) {
+      const updatedColumns = [...columns];
+      updatedColumns[dragIndex].span = col1Span.toString();
+      updatedColumns[dragIndex + 1].span = col2Span.toString();
+      setColumns(updatedColumns);
+      handleColumnStyleChange(selectedRow.id, columns[dragIndex].id, 'span', col1Span);
+      handleColumnStyleChange(selectedRow.id, columns[dragIndex + 1].id, 'span', col2Span);
     }
   };
 
   const handleMouseUp = () => {
-    setIsDragging(false);
-    setDragIndex(null);
+    if (isDragging) {
+      setIsDragging(false);
+      setDragIndex(null);
+    }
   };
 
+  console.log('columns', columns)
 
   return (
     <div
-      className="select-none bg-gray-100 "
+      className="select-none bg-gray-100"
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >
       <div className="pb-4 px-4">
-
         <div className="flex justify-end">
-          <button onClick={()=>{
-            handleAddColumn(selectedRow.id)
-          }} className="mb-3 ">
+          <button
+            onClick={() => handleAddColumn(selectedRow?.id)}
+            className="mb-3"
+          >
             + Add New
           </button>
         </div>
-        <div className="" style={{ display: "flex", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
           {columns.map((col, index) => (
             <React.Fragment key={col.id}>
               <div
                 onClick={() => setActiveColumn(col)}
-                className={`column  relative text-center border py-2 rounded-md bg-white ${activeColumn?.id === col.id ? "bg-blue-200" : ""}`}
+                className={`cursor-pointer relative text-center border py-2 rounded-md ${
+                  activeColumn?.id === col.id ? "bg-blue-200" : "bg-white"
+                }`}
                 style={{
-                  flexGrow: col.span,
+                  flexGrow: parseInt(col.span, 10), // Dynamically set width
                 }}
               >
                 {col.span}
                 {activeColumn?.id === col.id && (
-                  <div className="absolute -bottom-6 rotate-45 left-1/2 -translate-x-1/2  h-[14px] w-[14px] bg-white">
-                  </div>
-                )
-                }
-
+                  <div className="absolute -bottom-6 rotate-45 left-1/2 -translate-x-1/2 h-[14px] w-[14px] bg-white"></div>
+                )}
               </div>
               {index < columns.length - 1 && (
                 <div
-                  className="divider cursor-e-resize h-full"
-
+                  className="cursor-e-resize h-full"
                   onMouseDown={(e) => handleMouseDown(e, index)}
+                  style={{
+                    padding: "0 4px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
                 >
-                  <GripVertical />
+                  <GripVertical size={14} />
                 </div>
               )}
-
             </React.Fragment>
           ))}
         </div>
       </div>
-
-      {
-        activeColumn && (
-          <ColumnProperties rowid={selectedRow.id} data={activeColumn} />
-        )
-      }
-
-    </div >
+      {activeColumn && <ColumnProperties rowid={selectedRow?.id} data={activeColumn} />}
+    </div>
   );
 };
 

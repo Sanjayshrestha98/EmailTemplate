@@ -61,6 +61,7 @@ const inititalrowsList = [
                 width: 0,
                 color: "#000000",
             },
+
             advancedBorder: false,
             advancedRadius: false,
 
@@ -89,12 +90,29 @@ const inititalrowsList = [
                     paddingLeft: 0,
                     paddingRight: 0,
 
-                    borderLeft: 0,
-                    borderRight: 0,
-                    borderTop: 0,
-                    borderBottom: 0,
-                    borderColor: '#000000',
-                    borderType: 'solid',
+                    advancedPadding: false,
+
+                    // Border   
+                    borderLeft: {
+                        type: "none",
+                        width: 0,
+                        color: "#000000",
+                    },
+                    borderRight: {
+                        type: "none",
+                        width: 0,
+                        color: "#000000",
+                    },
+                    borderTop: {
+                        type: "none",
+                        width: 0,
+                        color: "#000000",
+                    },
+                    borderBottom: {
+                        type: "none",
+                        width: 0,
+                        color: "#000000",
+                    },
                 },
                 span: "12",
                 content: [
@@ -481,40 +499,55 @@ const BuilderProvider = ({ children }) => {
     };
 
     function handleColumnStyleChange(rowId, columnId, newStyle, value) {
-        setRowsList(prevRows => {
-            const updatedRows = prevRows.map(row => {
+        setRowsList((prevRows) => {
+            const updatedRows = prevRows.map((row) => {
                 if (row.id === rowId) {
                     return {
                         ...row,
-                        columns: row.columns.map(column => {
+                        columns: row.columns.map((column) => {
                             if (column.id === columnId) {
-                                if (newStyle === 'span') {
+                                if (newStyle === "span") {
+                                    // Update the span directly
                                     return {
                                         ...column,
-                                        [newStyle]: value
+                                        [newStyle]: value,
+                                    };
+                                } else {
+                                    // Handle nested styles
+                                    const updatedStyles = { ...column.styles }; // Copy styles object
+                                    const keys = newStyle.split("."); // Split key path
+
+                                    console.log(keys);
+                                    let currentObject = updatedStyles;
+                                    for (let i = 0; i < keys.length - 1; i++) {
+                                        const key = keys[i];
+                                        if (!currentObject[key]) currentObject[key] = {}; // Create nested object if missing
+                                        currentObject = currentObject[key];
+                                    }
+
+                                    // Set the final key value
+                                    currentObject[keys[keys.length - 1]] = value;
+
+                                    return {
+                                        ...column,
+                                        styles: updatedStyles, // Return updated styles
                                     };
                                 }
-                                return {
-                                    ...column,
-                                    style: {
-                                        ...column.style,
-                                        [newStyle]: value
-                                    }
-                                };
                             }
                             return column;
-                        })
+                        }),
                     };
                 }
                 return row;
             });
 
             // Update localStorage
-            localStorage.setItem('rowsList', JSON.stringify(updatedRows));
+            localStorage.setItem("rowsList", JSON.stringify(updatedRows));
 
             return updatedRows;
         });
     }
+
 
     const handleAddColumn = (rowId) => {
         const updatedRows = rowsList?.map((row, index) => {
@@ -540,14 +573,14 @@ const BuilderProvider = ({ children }) => {
         const updatedRows = rowsList?.map(row => {
             if (row.id === rowId) {
                 const columnIndex = row.columns.findIndex(col => col.id === columnId);
-    
+
                 // Ensure the column exists
                 if (columnIndex !== -1) {
                     // Ensure the row has more than one column
                     if (row.columns.length > 1) {
                         // Convert span to a number for calculations
                         const removedSpan = parseInt(row.columns[columnIndex].span, 10);
-    
+
                         // Adjust the span of the adjacent column
                         if (columnIndex > 0) {
                             // Add the removed span to the previous column
@@ -560,7 +593,7 @@ const BuilderProvider = ({ children }) => {
                                 parseInt(row.columns[columnIndex + 1].span, 10) + removedSpan
                             ).toString();
                         }
-    
+
                         // Remove the column
                         row.columns.splice(columnIndex, 1);
                     } else {
@@ -576,6 +609,8 @@ const BuilderProvider = ({ children }) => {
         localStorage.setItem("rowsList", JSON.stringify(updatedRows));
         setRowsList(updatedRows);
     };
+
+
 
     // function handleAddColumn(rowId, index) {
     //     const updatedRows = rowsList?.map(row => {
@@ -646,6 +681,8 @@ const BuilderProvider = ({ children }) => {
     useEffect(() => {
         localStorage.setItem('rootState', JSON.stringify(rootState));
     }, [rootState]);
+
+    console.log('rowsList', rowsList)
 
     return (
         <BuilderContext.Provider value={{

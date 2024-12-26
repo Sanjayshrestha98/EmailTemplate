@@ -10,7 +10,7 @@ import Borders from './RowProperties/RowBorder/Borders'
 
 function SingleRowSetting() {
 
-    const { selectedRow, setSelectedRow } = useContext(BuilderContext)
+    const { setSelectedRow } = useContext(BuilderContext)
 
     return (
         <div>
