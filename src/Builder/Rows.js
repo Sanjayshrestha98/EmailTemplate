@@ -22,7 +22,6 @@ const Rows = React.memo(({ data }) => {
     borderRight: `${data?.styles?.borderRight.width}px ${data?.styles?.borderRight.type} ${data?.styles?.borderRight.color}`,
     borderTop: `${data?.styles?.borderTop.width}px ${data?.styles?.borderTop.type} ${data?.styles?.borderTop.color}`,
     borderBottom: `${data?.styles?.borderBottom.width}px ${data?.styles?.borderBottom.type} ${data?.styles?.borderBottom.color}`,
-
     'border-top-left-radius': `${data?.styles?.borderRadiusTopLeft}px`,
     'border-top-right-radius': `${data?.styles?.borderRadiusTopRight}px`,
     'border-bottom-left-radius': `${data?.styles?.borderRadiusBottomLeft}px`,
@@ -61,13 +60,13 @@ const Rows = React.memo(({ data }) => {
         selectedRow && (selectedRow?.id === data?.id && <><div className='absolute top-0 text-xs bg-blue-600 right-0 w-fit px-2 text-white  '>This is selected</div></>)
       }
 
-      <table align={rootState.alignment} border="0" cellPadding="0" cellSpacing="0" className="row-content"
+      <table align={rootState?.alignment} border="0" cellPadding="0" cellSpacing="0" className="row-content"
         role="presentation"
       // style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 650px; margin: 0 auto;"
       // width={rootState.width}
       >
         <tbody>
-          <div style={contentAreaStyles} >
+          <div style={contentAreaStyles} role='presentation' className='flex'>
 
             {
               data?.columns?.map((value) => {

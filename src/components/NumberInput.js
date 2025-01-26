@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 function NumberInput({ max, min, step, onChange, defaultValue }) {
 
+    console.log('NumberInput rendered', defaultValue);
+
     const [number, setNumber] = useState(defaultValue || 0);
 
     const handleIncrement = () => {

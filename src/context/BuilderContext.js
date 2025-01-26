@@ -6,6 +6,7 @@ const BuilderContext = createContext();
 
 const newEmptyColumn = {
     // id: uuidv1(),
+    id: uuidv1(),
     styles: {
 
         backgroundColor: '#ffffff',
@@ -15,12 +16,29 @@ const newEmptyColumn = {
         paddingLeft: 0,
         paddingRight: 0,
 
-        borderLeft: 0,
-        borderRight: 0,
-        borderTop: 0,
-        borderBottom: 0,
-        borderColor: '#000000',
-        borderType: 'solid',
+        advancedPadding: false,
+
+        // Border   
+        borderLeft: {
+            type: "none",
+            width: 0,
+            color: "#000000",
+        },
+        borderRight: {
+            type: "none",
+            width: 0,
+            color: "#000000",
+        },
+        borderTop: {
+            type: "none",
+            width: 0,
+            color: "#000000",
+        },
+        borderBottom: {
+            type: "none",
+            width: 0,
+            color: "#000000",
+        },
     },
     span: "1",
     content: []
@@ -499,53 +517,56 @@ const BuilderProvider = ({ children }) => {
     };
 
     function handleColumnStyleChange(rowId, columnId, newStyle, value) {
-        setRowsList((prevRows) => {
-            const updatedRows = prevRows.map((row) => {
-                if (row.id === rowId) {
-                    return {
-                        ...row,
-                        columns: row.columns.map((column) => {
-                            if (column.id === columnId) {
-                                if (newStyle === "span") {
-                                    // Update the span directly
-                                    return {
-                                        ...column,
-                                        [newStyle]: value,
-                                    };
-                                } else {
-                                    // Handle nested styles
-                                    const updatedStyles = { ...column.styles }; // Copy styles object
-                                    const keys = newStyle.split("."); // Split key path
+        const updatedRows = rowsList.map((row) => {
+            if (row.id !== rowId) return row; // Skip rows that don't match
 
-                                    console.log(keys);
-                                    let currentObject = updatedStyles;
-                                    for (let i = 0; i < keys.length - 1; i++) {
-                                        const key = keys[i];
-                                        if (!currentObject[key]) currentObject[key] = {}; // Create nested object if missing
-                                        currentObject = currentObject[key];
-                                    }
+            // Process only the targeted row
+            const updatedRow = {
+                ...row,
+                columns: row.columns.map((column) => {
+                    if (column.id !== columnId) return column; // Skip columns that don't match
 
-                                    // Set the final key value
-                                    currentObject[keys[keys.length - 1]] = value;
+                    if (newStyle === "span") {
+                        return { ...column, [newStyle]: value };
+                    }
 
-                                    return {
-                                        ...column,
-                                        styles: updatedStyles, // Return updated styles
-                                    };
-                                }
+                    // Handle nested styles
+                    const updatedStyles = { ...column.styles };
+
+                    const keys = newStyle.split(".");
+
+
+                    if (keys.length === 1) {
+                        return {
+                            ...column,
+                            styles: {
+                                ...updatedStyles,
+                                [newStyle]: value
                             }
-                            return column;
-                        }),
-                    };
-                }
-                return row;
-            });
+                        };
+                    }
 
-            // Update localStorage
-            localStorage.setItem("rowsList", JSON.stringify(updatedRows));
+                    let currentObject = updatedStyles;
+                    for (let i = 0; i < keys.length - 1; i++) {
+                        const key = keys[i];
+                        if (!currentObject[key]) currentObject[key] = {}; // Ensure nested structure
+                        currentObject = currentObject[key];
+                    }
+                    currentObject[keys[keys.length - 1]] = value;
 
-            return updatedRows;
+                    return { ...column, styles: updatedStyles };
+                }),
+            };
+            return updatedRow;
         });
+
+        setRowsList(updatedRows);
+
+        // Optimize row selection
+        const selectedRow = updatedRows.find(row => row.id === rowId);
+        setSelectedRow(selectedRow);
+
+        localStorage.setItem("rowsList", JSON.stringify(updatedRows));
     }
 
 
@@ -681,9 +702,7 @@ const BuilderProvider = ({ children }) => {
     useEffect(() => {
         localStorage.setItem('rootState', JSON.stringify(rootState));
     }, [rootState]);
-
-    console.log('rowsList', rowsList)
-
+ 
     return (
         <BuilderContext.Provider value={{
             selectedTab,

@@ -18,7 +18,7 @@ function Cardstyle() {
         <div className='flex items-center gap-2'>
 
           <NumberInput max={30} min={0} step={1}
-            defaultValue={selectedRow?.styles.cellSpacing}
+            defaultValue={selectedRow?.styles?.cellSpacing}
             onChange={(value) => handleRowStyleChange(selectedRow.id, `cellSpacing`, value)}
           />
 

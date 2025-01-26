@@ -11,6 +11,7 @@ function SingleNode({ data, width, rowid }) {
     const styles = {
         padding: `${data?.styles?.padding}px`,
     }
+ 
 
     const renderElement = (type) => {
         switch (type) {
