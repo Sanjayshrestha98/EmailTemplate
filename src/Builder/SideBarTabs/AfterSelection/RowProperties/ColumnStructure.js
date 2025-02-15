@@ -95,7 +95,7 @@ const ColumnStructure = () => {
                   className={`cursor-pointer relative text-center border py-2 rounded-md ${activeColumn?.id === col.id ? "bg-blue-200" : "bg-white"
                     }`}
                   style={{
-                    flexGrow: parseInt(col.span, 10), // Dynamically set width
+                    flexGrow: parseInt(col.span, 10),
                   }}
                 >
                   {col.span}
@@ -105,7 +105,7 @@ const ColumnStructure = () => {
                 </div>
                 {index < columns.length - 1 && (
                   <div
-                    className="cursor-ew-resize h-full px-2 flex items-center justify-center bg-gray-300 hover:bg-gray-400 rounded transition-all"
+                    className="cursor-ew-resize h-full px-2 flex items-center justify-center   hover:bg-gray-400 rounded transition-all"
                     onMouseDown={(e) => handleMouseDown(e, index)}
                   >
                     <GripVertical size={16} />
