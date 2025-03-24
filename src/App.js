@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import DnD from './Builder/dnd';
 import './App.css';
 import TemplateBuilder from './Builder/TemplateBuilder';
 
@@ -7,6 +7,8 @@ function App() {
     <div>
       {/* Reminder: Use Slate JS */}
       <TemplateBuilder />
+
+      <DnD />
     </div>
   );
 }

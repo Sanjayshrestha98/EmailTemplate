@@ -1,10 +1,20 @@
 import React from 'react'
 import SingleNode from './SingleNode'
 import { BuilderContext } from '../context/BuilderContext'
+import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
 
 function Columns({ data, rowStyles, rowid }) {
 
     const { rootState } = React.useContext(BuilderContext)
+    const { isOver, setNodeRef } = useDroppable({
+        id: data?.id,
+    });
+
+    const handleDragEnd = (event) => {
+        const { active, over } = event;
+        console.log('active', active)
+        console.log('over', over)
+    };
 
     return (
         <div
@@ -33,7 +43,22 @@ function Columns({ data, rowStyles, rowid }) {
                             return <SingleNode rowid={rowid} key={value?.id} data={value} width={`${(rootState?.width / 12) * data?.span}px`} />
                         })
                         :
-                        <>No Contents</>
+                        <div
+                            ref={setNodeRef}
+                            style={{
+                                backgroundColor: isOver ? "#f0f0f0" : "#fff",
+
+                                width: '100%',
+                                height: '100%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                fontSize: '20px',
+                                color: 'grey'
+                            }}
+                        >
+                            Drag Elements Here
+                        </div>
                 }
             </div>
         </div>

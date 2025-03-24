@@ -117,7 +117,7 @@ const ColumnStructure = () => {
         </div>
       </div>
       {activeColumn ? <ColumnProperties rowid={selectedRow?.id} data={activeColumn} /> :
-        <div className="p-4 text-center text-gray-500 h-[200px] flex items-center justify-center"> 
+        <div className="p-4 text-center font-semibold text-gray-500 h-[200px] flex items-center justify-center"> 
             Loading
         </div>
       }

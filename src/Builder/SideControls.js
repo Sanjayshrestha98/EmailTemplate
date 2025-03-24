@@ -25,8 +25,8 @@ function SideControls(props) {
   const { rootState, selectedTab, setSelectedTab, setSelectedRow, setSelectedNode } = useContext(BuilderContext)
 
   const items = [
-    { label: 'TITLE', icon: 'T', id: "1" },
-    { label: 'PARAGRAPH', icon: 'P', id: "2" },
+    { label: 'TITLE', icon: 'T', id: "1", data: { type: 'title', content: 'Title' } },
+    { label: 'PARAGRAPH', icon: 'P', id: "2", data: { type: 'paragraph', content: 'Paragraph' } },
     { label: 'IMAGE', icon: 'I', id: "3" },
     // { label: 'LIST', icon: 'L' },
     // { label: 'BUTTON', icon: 'B' },
@@ -50,6 +50,15 @@ function SideControls(props) {
   // });
 
   const [isDragging, setIsDragging] = useState(false);
+  const [activeId, setActiveId] = useState(null);
+
+  function handleDragStart(event) {
+    setActiveId(event.active.id);
+  }
+
+  function handleDragEnd() {
+    setActiveId(null);
+  }
 
   return (
     <div
@@ -57,7 +66,7 @@ function SideControls(props) {
         scrollbarWidth: "thin",
         // scrollbarGutter: "stable ="
       }}
-      className='w-2/5 overscroll-contain border border-collapse max-h-screen sticky top-12 overflow-y-auto h-[calc(100vh-3rem)]'>
+      className='w-2/5 border border-collapse max-h-screen sticky top-12 h-[calc(100vh-3rem)]'>
       <div className="flex border-b sticky top-0 bg-white z-10">
         {tabs.map((tab, index) => (
           <button
@@ -87,6 +96,15 @@ function SideControls(props) {
                 </div>
               </Draggable>
             ))}
+
+            <DragOverlay>
+              {activeId ? (
+                <div className="flex flex-col items-center justify-center p-4 border rounded-lg hover:bg-gray-100 cursor-pointer">
+                  <div className="text-2xl font-bold mb-2">`Item ${activeId}`</div>
+                  {/* <div className="text-sm font-medium">{item.label}</div> */}
+                </div>
+              ) : null}
+            </DragOverlay>
 
           </div>
         )}

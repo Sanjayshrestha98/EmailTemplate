@@ -8,6 +8,18 @@ function TemplateBuilder() {
 
     const [builderData, setBuilderData] = useState({});
 
+    const [activeId, setActiveId] = useState(null);
+
+    function handleDragStart(event) {
+        setActiveId(event.active.id);
+    }
+
+    function handleDragEnd(event) {
+
+        console.log('active', event.active)
+        console.log('over', event.over)
+        setActiveId(null);
+    }
     return (
         <div className='flex w-full flex-col h-full min-h-screen'>
             <div className='flex w-full py-2 px-4 sticky h-12 z-10 top-0 bg-white border-b'>
@@ -15,7 +27,7 @@ function TemplateBuilder() {
             </div>
             <div className='flex flex-1 w-full h-full'>
                 <BuilderProvider>
-                    <DndContext >
+                    <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd} >
                         {/* Droppable */}
                         <Playground />
 

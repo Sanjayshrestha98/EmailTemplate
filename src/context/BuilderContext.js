@@ -631,8 +631,6 @@ const BuilderProvider = ({ children }) => {
         setRowsList(updatedRows);
     };
 
-
-
     // function handleAddColumn(rowId, index) {
     //     const updatedRows = rowsList?.map(row => {
     //         if (row.id === rowId) {
