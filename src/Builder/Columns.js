@@ -38,7 +38,7 @@ function Columns({ data, rowStyles, rowid }) {
                 {
                     data?.content?.length > 0 ?
                         data?.content?.map((value) => {
-                            return <SingleNode rowid={rowid} key={value?.id} data={value}
+                            return <SingleNode rowid={rowid} columnid={data?.id} key={value?.id} data={value}
                             // width={`${(rootState?.width / 12) * data?.span}px`}
                             />
                         })

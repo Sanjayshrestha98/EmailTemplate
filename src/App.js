@@ -9,9 +9,8 @@ function App() {
       {/* Reminder: Use Slate JS */}
       <BuilderProvider>
         <TemplateBuilder />
-      </BuilderProvider>
-
-      <DnD />
+      </BuilderProvider> 
+      {/* <DnD /> */}
     </div>
   );
 }

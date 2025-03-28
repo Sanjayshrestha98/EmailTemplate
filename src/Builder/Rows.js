@@ -22,10 +22,10 @@ const Rows = React.memo(({ data }) => {
     borderRight: `${data?.styles?.borderRight.width}px ${data?.styles?.borderRight.type} ${data?.styles?.borderRight.color}`,
     borderTop: `${data?.styles?.borderTop.width}px ${data?.styles?.borderTop.type} ${data?.styles?.borderTop.color}`,
     borderBottom: `${data?.styles?.borderBottom.width}px ${data?.styles?.borderBottom.type} ${data?.styles?.borderBottom.color}`,
-    'border-top-left-radius': `${data?.styles?.borderRadiusTopLeft}px`,
-    'border-top-right-radius': `${data?.styles?.borderRadiusTopRight}px`,
-    'border-bottom-left-radius': `${data?.styles?.borderRadiusBottomLeft}px`,
-    'border-bottom-right-radius': `${data?.styles?.borderRadiusBottomRight}px`,
+    borderTopLeftRadius: `${data?.styles?.borderRadiusTopLeft}px`,
+    borderTopRightRadius: `${data?.styles?.borderRadiusTopRight}px`,
+    borderBottomLeftRadius: `${data?.styles?.borderRadiusBottomLeft}px`,
+    borderBottomRightRadius: `${data?.styles?.borderRadiusBottomRight}px`,
 
   }
 

@@ -5,19 +5,13 @@ import { v1 as uuidv1 } from 'uuid';
 const BuilderContext = createContext();
 
 const newEmptyColumn = {
-    // id: uuidv1(),
-    id: uuidv1(),
     styles: {
-
         backgroundColor: '#ffffff',
-
         paddingTop: 0,
         paddingBottom: 0,
         paddingLeft: 0,
         paddingRight: 0,
-
         advancedPadding: false,
-
         // Border   
         borderLeft: {
             type: "none",
@@ -64,7 +58,7 @@ const newEmptyParagraphItem = {
 
 const newRowList = [
     {
-        "id": uuidv1(),
+        "id": "row-1",
         "styles": {
             "backgroundColor": "#d81111",
             "contentAreaBackgroundColor": "#ebdada",
@@ -105,7 +99,7 @@ const newRowList = [
         },
         "columns": [
             {
-                "id": uuidv1(),
+                "id": "col-1",
                 "styles": {
                     "backgroundColor": "#c4686800",
                     "paddingTop": 2,
@@ -157,7 +151,7 @@ const newRowList = [
                             "padding": 10,
                             "margin": 0
                         },
-                        "id": uuidv1(),
+                        "id": "content-1",
                         "type": "paragraph",
                         "content": "\n              <p>\n                This is 0,0. It has support for a document, with paragraphs and text. That's it. It's probably too much for real minimalists though.\n              </p>  "
                     },
@@ -166,14 +160,14 @@ const newRowList = [
                             "padding": 10,
                             "margin": 0
                         },
-                        "id": uuidv1(),
+                        "id": "content-2",
                         "type": "paragraph",
                         "content": "\n              <p>\n                This is a 0,1 reduced version of Tiptap. It has support for a document, with paragraphs and text. That's it. It's probably too much for real minimalists though.\n              </p>\n              <p>\n                The paragraph extension is not really required, but you need at least one node. Sure, that node can be something different.\n              </p>\n            "
                     }
                 ]
             },
             {
-                "id": uuidv1(),
+                "id": "col-2",
                 "styles": {
                     "backgroundColor": "#d5c361",
                     "paddingTop": 0,
@@ -251,7 +245,7 @@ const newRowList = [
                 },
                 "span": 1,
                 "content": [],
-                "id": uuidv1()
+                "id": "col-3"
             }
         ]
     }
@@ -700,6 +694,9 @@ const inititalrowsList = [
 // Create a Provider component
 const BuilderProvider = ({ children }) => {
     const [selectedRow, setSelectedRow] = useState(null);
+
+    const [isEditing, setIsEditing] = useState(false);
+
     const [rowsList, setRowsList] = useState(JSON.parse(localStorage.getItem('rowsList')) || newRowList);
 
     const handleRowStyleChange = (rowId, styleKey, value) => {
@@ -839,36 +836,51 @@ const BuilderProvider = ({ children }) => {
         setRowsList(updatedRows);
     };
 
-    const addItemsToColumn = (rowId, columnId, type) => { 
+    const addItemsToColumn = (rowId, columnId, type) => {
 
         const updatedRows = rowsList?.map(row => {
-            console.log('row.id === rowId', row.id === rowId)
             if (row.id === rowId) {
                 const columnIndex = row.columns.findIndex(col => col.id === columnId);
-                console.log('columnIndex', columnIndex)
                 if (columnIndex !== -1) {
                     row.columns[columnIndex].content.push(type === "paragraph" ? { ...newEmptyParagraphItem, id: uuidv1() } : { ...newEmptyTitleItem, id: uuidv1() });
                 }
             }
             return row;
         });
-
-        console.log('updatedRows', updatedRows)
         localStorage.setItem("rowsList", JSON.stringify(updatedRows));
         setRowsList(updatedRows);
     };
 
-    // function handleAddColumn(rowId, index) {
-    //     const updatedRows = rowsList?.map(row => {
-    //         if (row.id === rowId) {
-    //             const newColumn = { ...newEmptyColumn };
-    //             row.columns.splice(index, 0, newColumn);
-    //         }
-    //         return row;
-    //     });
-    //     localStorage.setItem('rowsList', JSON.stringify(updatedRows));
-    //     setRowsList(updatedRows);
-    // }
+    const deleteItemFromColumn = (rowId, columnId, itemId) => {
+        const updatedRows = rowsList?.map(row => {
+            if (row?.id === rowId) {
+                const columnIndex = row?.columns?.findIndex(col => col?.id === columnId);
+                if (columnIndex !== -1) {
+                    row.columns[columnIndex].content = row?.columns[columnIndex].content?.filter(item => item?.id !== itemId);
+                }
+            }
+            return row;
+        });
+
+        localStorage.setItem("rowsList", JSON.stringify(updatedRows));
+        setRowsList(updatedRows);
+    }
+
+
+    const handleContentChange = (rowId, columnId, itemId, content) => {
+        const updatedRows = rowsList?.map(row => {
+            if (row?.id === rowId) {
+                const columnIndex = row?.columns?.findIndex(col => col?.id === columnId);
+                if (columnIndex !== -1) {
+                    row.columns[columnIndex].content = row?.columns[columnIndex].content?.map(item => item?.id === itemId ? { ...item, content } : item);
+                }
+            }
+            return row;
+        });
+
+        localStorage.setItem("rowsList", JSON.stringify(updatedRows));
+        setRowsList(updatedRows);
+    }
 
     // Define the initial state
     const initialRootContentState = {
@@ -930,6 +942,8 @@ const BuilderProvider = ({ children }) => {
 
     return (
         <BuilderContext.Provider value={{
+            isEditing,
+            setIsEditing,
             addItemsToColumn,
             selectedTab,
             setSelectedTab,
@@ -944,7 +958,9 @@ const BuilderProvider = ({ children }) => {
             handleRowStyleChange,
             handleColumnStyleChange,
             handleAddColumn,
-            handleDeleteColumn
+            handleDeleteColumn,
+            deleteItemFromColumn,
+            handleContentChange
         }}>
             {children}
         </BuilderContext.Provider>

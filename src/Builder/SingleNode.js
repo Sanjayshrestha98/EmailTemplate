@@ -5,21 +5,20 @@ import { mouseOver } from '../utils/HoverToggle/MouseOver';
 import { mouseLeave } from '../utils/HoverToggle/MouseLeave';
 import TitleElem from './Elements/TitleElem';
 
-function SingleNode({ data, width, rowid }) {
+function SingleNode({ data, width, rowid, columnid }) {
 
-    const { rootState, selectedNode, setSelectedRow, setSelectedNode, setSelectedTab } = useContext(BuilderContext)
+    const { rootState, selectedNode, setSelectedRow, setSelectedNode, setSelectedTab, deleteItemFromColumn, handleContentChange } = useContext(BuilderContext)
 
     const styles = {
         padding: `${data?.styles?.padding}px`,
     }
- 
 
     const renderElement = (type) => {
         switch (type) {
             case 'paragraph':
-                return <ParagraphElem data={data} />
+                return <ParagraphElem data={data} rowId={rowid} columnId={columnid} itemId={data?.id} handleContentChange={handleContentChange} />
             case 'title':
-                return <TitleElem data={data} />
+                return <TitleElem data={data} rowId={rowid} columnId={columnid} itemId={data?.id} handleContentChange={handleContentChange} />
             default:
                 break;
         }
@@ -46,7 +45,14 @@ function SingleNode({ data, width, rowid }) {
                 width: width
             }}>
 
-            <div className='absolute top-0 text-xs bg-blue-600 right-0 w-fit px-2 group-hover:block hidden text-white capitalize'>{data?.type}</div>
+            <div className={`absolute top-0 text-xs bg-blue-600 right-0 w-fit px-2  text-white capitalize ${selectedNode && selectedNode?.id === data?.id ? ' hidden' : 'group-hover:block hidden'}`}>{data?.type}</div>
+            <div className='absolute bottom-full text-xs bg-blue-600 right-0 w-fit px-2 text-white capitalize'>{selectedNode && selectedNode?.id === data?.id ?
+                <>
+                    <button className='text-white' onClick={() => {
+                        deleteItemFromColumn(rowid, columnid, data?.id)
+                    }}>Delete</button>
+                </>
+                : ''}</div>
 
             {renderElement(data?.type)}
         </div>

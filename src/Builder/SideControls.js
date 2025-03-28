@@ -22,6 +22,7 @@ function Draggable(props) {
     </div>
   );
 }
+
 function SideControls(props) {
 
   const { rootState, selectedTab, setSelectedTab, setSelectedRow, selectedRow, setSelectedNode } = useContext(BuilderContext)
@@ -31,22 +32,10 @@ function SideControls(props) {
       label: 'TITLE',
       icon: 'T',
       id: "1",
-      data: {
-        type: 'title',
-        value: {
-          styles: {
-            padding: 10,
-            margin: 0,
-          },
-          id: uuidv1(),
-          content: `
-<p>
-This is a title
-</p>  ` },
-      }
+      type: 'title',
     },
-    { label: 'PARAGRAPH', icon: 'P', id: "2", data: { type: 'paragraph', content: 'Paragraph' } },
-    { label: 'IMAGE', icon: 'I', id: "3" },
+    { label: 'PARAGRAPH', icon: 'P', id: "2", type: 'paragraph' },
+    { label: 'IMAGE', icon: 'I', id: "3", type: 'image' },
     // { label: 'LIST', icon: 'L' },
     // { label: 'BUTTON', icon: 'B' },
     // { label: 'TABLE', icon: 'T' },
@@ -108,7 +97,7 @@ This is a title
           <div className="grid grid-cols-3 p-4 gap-4">
 
             {items.map((item, index) => (
-              <Draggable id={item.id} key={item.id} data={item.data} >
+              <Draggable id={item.id} key={item.id} data={item} >
                 <div className="flex flex-col items-center justify-center p-4 border rounded-lg hover:bg-gray-100 cursor-pointer">
                   <div className="text-2xl font-bold mb-2">{item.icon}</div>
                   <div className="text-sm font-medium">{item.label}</div>

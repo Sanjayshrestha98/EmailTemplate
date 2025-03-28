@@ -8,11 +8,18 @@ import React, { useEffect } from 'react'
 import MyBubbleMenu from '../MyBubbleMenu'
 import BulletList from '@tiptap/extension-bullet-list'
 import ListItem from '@tiptap/extension-list-item'
+import { debounce } from 'lodash'
 
-function TitleElem({ data }) {
+function TitleElem({ data, handleContentChange, rowId, columnId, itemId }) {
 
     const [isEditable, setIsEditable] = React.useState(true)
 
+    const debouncedUpdate = React.useCallback(
+        debounce((content) => {
+            handleContentChange(rowId, columnId, itemId, content);
+        }, 1000),
+        [rowId, columnId, itemId, handleContentChange]
+    );
     const editor = useEditor({
         extensions: [
             BulletList,
@@ -28,7 +35,13 @@ function TitleElem({ data }) {
             Text,
         ],
         content: data.content,
-    })
+        onUpdate: ({ editor }) => {
+            const newContent = editor.getHTML();
+            debouncedUpdate(newContent);
+        }
+    })  
+
+
 
     useEffect(() => {
         if (editor) {
@@ -38,14 +51,6 @@ function TitleElem({ data }) {
 
     return (
         <>
-
-            {/* <div className="control-group">
-                                <label>
-                                    <input type="checkbox" checked={isEditable} onChange={() => setIsEditable(!isEditable)} />
-                                    Editable
-                                </label>
-                            </div> */}
-
             {editor && <MyBubbleMenu editor={editor} />}
             <EditorContent editor={editor} onChange={() => { console.log('changed') }} />
         </>

@@ -23,11 +23,11 @@ function TemplateBuilder() {
  
         const overId = over?.id;
 
-        console.log('activeData', activeData)
-        console.log('overID', overId) 
+        // console.log('activeData', activeData)
+        // console.log('overID', overId) 
 
         console.log('active', event?.active)
-        console.log('over', event?.over)
+        // console.log('over', event?.over)
         setActiveId(null);
  
 

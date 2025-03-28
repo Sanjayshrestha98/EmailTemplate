@@ -5,8 +5,7 @@ import NumberInput from '../../../../components/NumberInput'
 import ColorPicker from '../../../../components/ColorPicker'
 
 function ColumnProperties({ rowid, data }) {
-
-    console.log('data', data)
+ 
     const { handleDeleteColumn, handleColumnStyleChange, selectedRow } = React.useContext(BuilderContext)
 
     const [showAllPaddingSides, setShowAllPaddingSides] = React.useState(data?.styles?.advancedPadding || false)
