@@ -44,6 +44,219 @@ const newEmptyColumn = {
     content: []
 }
 
+const newEmptyTitleItem = {
+    "styles": {
+        "padding": 10,
+        "margin": 0
+    },
+    "type": "title",
+    "content": "\n <p>\n This is Title\n </p>  ",
+}
+
+const newEmptyParagraphItem = {
+    "styles": {
+        "padding": 10,
+        "margin": 0
+    },
+    "type": "paragraph",
+    "content": "\n <p>\n This is a paragraph \n </p>  ",
+}
+
+const newRowList = [
+    {
+        "id": uuidv1(),
+        "styles": {
+            "backgroundColor": "#d81111",
+            "contentAreaBackgroundColor": "#ebdada",
+            "hasBackgroundImage": true,
+            "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ718nztPNJfCbDJjZG8fOkejBnBAeQw5eAUA&s",
+            "backgroundRepeat": true,
+            "backgroundFit": false,
+            "backgroundCenter": true,
+            "applyImageTo": "row",
+            "borderLeft": {
+                "type": "solid",
+                "width": 0,
+                "color": "#000000"
+            },
+            "borderRight": {
+                "type": "solid",
+                "width": 0,
+                "color": "#000000"
+            },
+            "borderTop": {
+                "type": "solid",
+                "width": 0,
+                "color": "#000000"
+            },
+            "borderBottom": {
+                "type": "solid",
+                "width": 0,
+                "color": "#000000"
+            },
+            "advancedBorder": false,
+            "advancedRadius": false,
+            "borderRadiusTopLeft": 7,
+            "borderRadiusTopRight": 7,
+            "borderRadiusBottomLeft": 7,
+            "borderRadiusBottomRight": 7,
+            "verticalAlign": "top",
+            "cellSpacing": 5
+        },
+        "columns": [
+            {
+                "id": uuidv1(),
+                "styles": {
+                    "backgroundColor": "#c4686800",
+                    "paddingTop": 2,
+                    "paddingBottom": 5,
+                    "paddingLeft": 10,
+                    "paddingRight": 3,
+                    "advancedPadding": true,
+                    "borderLeft": {
+                        "type": "solid",
+                        "width": 10,
+                        "color": "#3e3ae3"
+                    },
+                    "borderRight": {
+                        "width": 3,
+                        "color": "#3e3ae3",
+                        "type": "dashed"
+                    },
+                    "borderTop": {
+                        "width": 10,
+                        "color": "#3e3ae3",
+                        "type": "solid"
+                    },
+                    "borderBottom": {
+                        "width": 10,
+                        "color": "#3e3ae3",
+                        "type": "solid"
+                    },
+                    "styles": {
+                        "paddingTop": 9,
+                        "paddingLeft": 9,
+                        "paddingRight": 9,
+                        "paddingBottom": 9
+                    },
+                    "newStyle": 9,
+                    "padding": {
+                        "paddingTop": 2,
+                        "paddingLeft": 1,
+                        "paddingRight": 2,
+                        "paddingBottom": 2,
+                        "paddingpaddingLeft": 6
+                    },
+                    "advancedBorder": true,
+                    "border": {}
+                },
+                "span": "6",
+                "content": [
+                    {
+                        "styles": {
+                            "padding": 10,
+                            "margin": 0
+                        },
+                        "id": uuidv1(),
+                        "type": "paragraph",
+                        "content": "\n              <p>\n                This is 0,0. It has support for a document, with paragraphs and text. That's it. It's probably too much for real minimalists though.\n              </p>  "
+                    },
+                    {
+                        "styles": {
+                            "padding": 10,
+                            "margin": 0
+                        },
+                        "id": uuidv1(),
+                        "type": "paragraph",
+                        "content": "\n              <p>\n                This is a 0,1 reduced version of Tiptap. It has support for a document, with paragraphs and text. That's it. It's probably too much for real minimalists though.\n              </p>\n              <p>\n                The paragraph extension is not really required, but you need at least one node. Sure, that node can be something different.\n              </p>\n            "
+                    }
+                ]
+            },
+            {
+                "id": uuidv1(),
+                "styles": {
+                    "backgroundColor": "#d5c361",
+                    "paddingTop": 0,
+                    "paddingBottom": 0,
+                    "paddingLeft": 0,
+                    "paddingRight": 0,
+                    "advancedPadding": false,
+                    "borderLeft": {
+                        "type": "solid",
+                        "width": 10,
+                        "color": "#5f1515"
+                    },
+                    "borderRight": {
+                        "type": "solid",
+                        "width": 10,
+                        "color": "#5f1515"
+                    },
+                    "borderTop": {
+                        "type": "solid",
+                        "width": 10,
+                        "color": "#5f1515"
+                    },
+                    "borderBottom": {
+                        "type": "solid",
+                        "width": 10,
+                        "color": "#5f1515"
+                    },
+                    "padding": {
+                        "paddingLeft": 30,
+                        "paddingRight": 30,
+                        "paddingBottom": 30,
+                        "paddingTop": 30
+                    }
+                },
+                "span": 5,
+                "content": []
+            },
+            {
+                "styles": {
+                    "backgroundColor": "#d5e8cc",
+                    "paddingTop": 0,
+                    "paddingBottom": 0,
+                    "paddingLeft": 0,
+                    "paddingRight": 0,
+                    "borderLeft": {
+                        "color": "#ed1111",
+                        "type": "solid",
+                        "width": 10
+                    },
+                    "borderRight": {
+                        "width": 10,
+                        "color": "#ed1111",
+                        "type": "solid"
+                    },
+                    "borderTop": {
+                        "type": "solid",
+                        "width": 10,
+                        "color": "#ed1111"
+                    },
+                    "borderBottom": {
+                        "type": "solid",
+                        "width": 10,
+                        "color": "#ed1111"
+                    },
+                    "borderColor": "#000000",
+                    "borderType": "solid",
+                    "padding": {
+                        "paddingTop": 13,
+                        "paddingLeft": 13,
+                        "paddingRight": 13,
+                        "paddingBottom": 13
+                    },
+                    "advancedPadding": true,
+                    "advancedBorder": true
+                },
+                "span": 1,
+                "content": [],
+                "id": uuidv1()
+            }
+        ]
+    }
+]
+
 const inititalrowsList = [
     {
         id: uuidv1(),
@@ -484,14 +697,10 @@ const inititalrowsList = [
     }
 ]
 
-const applyChanges = (rowid, columnid, nodeid, type, payload) => {
-
-}
-
 // Create a Provider component
 const BuilderProvider = ({ children }) => {
     const [selectedRow, setSelectedRow] = useState(null);
-    const [rowsList, setRowsList] = useState(JSON.parse(localStorage.getItem('rowsList')) || inititalrowsList);
+    const [rowsList, setRowsList] = useState(JSON.parse(localStorage.getItem('rowsList')) || newRowList);
 
     const handleRowStyleChange = (rowId, styleKey, value) => {
         const updatedRows = rowsList?.map(row => {
@@ -569,7 +778,6 @@ const BuilderProvider = ({ children }) => {
         localStorage.setItem("rowsList", JSON.stringify(updatedRows));
     }
 
-
     const handleAddColumn = (rowId) => {
         const updatedRows = rowsList?.map((row, index) => {
             if (row.id === rowId) {
@@ -627,6 +835,25 @@ const BuilderProvider = ({ children }) => {
             return row;
         });
 
+        localStorage.setItem("rowsList", JSON.stringify(updatedRows));
+        setRowsList(updatedRows);
+    };
+
+    const addItemsToColumn = (rowId, columnId, type) => { 
+
+        const updatedRows = rowsList?.map(row => {
+            console.log('row.id === rowId', row.id === rowId)
+            if (row.id === rowId) {
+                const columnIndex = row.columns.findIndex(col => col.id === columnId);
+                console.log('columnIndex', columnIndex)
+                if (columnIndex !== -1) {
+                    row.columns[columnIndex].content.push(type === "paragraph" ? { ...newEmptyParagraphItem, id: uuidv1() } : { ...newEmptyTitleItem, id: uuidv1() });
+                }
+            }
+            return row;
+        });
+
+        console.log('updatedRows', updatedRows)
         localStorage.setItem("rowsList", JSON.stringify(updatedRows));
         setRowsList(updatedRows);
     };
@@ -700,9 +927,10 @@ const BuilderProvider = ({ children }) => {
     useEffect(() => {
         localStorage.setItem('rootState', JSON.stringify(rootState));
     }, [rootState]);
- 
+
     return (
         <BuilderContext.Provider value={{
+            addItemsToColumn,
             selectedTab,
             setSelectedTab,
             selectedRow,

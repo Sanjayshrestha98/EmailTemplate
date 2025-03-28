@@ -3,10 +3,12 @@ import RowsSelector from './SideBarTabs/RowsSelector';
 import { DragOverlay, useDraggable } from '@dnd-kit/core';
 import Settings from './SideBarTabs/Settings';
 import { BuilderContext } from '../context/BuilderContext';
+import { v1 as uuidv1 } from 'uuid';
 
 function Draggable(props) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: props.id,
+    data: props.data
   });
 
   const style = transform ? {
@@ -22,10 +24,27 @@ function Draggable(props) {
 }
 function SideControls(props) {
 
-  const { rootState, selectedTab, setSelectedTab, setSelectedRow, setSelectedNode } = useContext(BuilderContext)
+  const { rootState, selectedTab, setSelectedTab, setSelectedRow, selectedRow, setSelectedNode } = useContext(BuilderContext)
 
   const items = [
-    { label: 'TITLE', icon: 'T', id: "1", data: { type: 'title', content: 'Title' } },
+    {
+      label: 'TITLE',
+      icon: 'T',
+      id: "1",
+      data: {
+        type: 'title',
+        value: {
+          styles: {
+            padding: 10,
+            margin: 0,
+          },
+          id: uuidv1(),
+          content: `
+<p>
+This is a title
+</p>  ` },
+      }
+    },
     { label: 'PARAGRAPH', icon: 'P', id: "2", data: { type: 'paragraph', content: 'Paragraph' } },
     { label: 'IMAGE', icon: 'I', id: "3" },
     // { label: 'LIST', icon: 'L' },
@@ -89,7 +108,7 @@ function SideControls(props) {
           <div className="grid grid-cols-3 p-4 gap-4">
 
             {items.map((item, index) => (
-              <Draggable id={item.id} key={item.id} >
+              <Draggable id={item.id} key={item.id} data={item.data} >
                 <div className="flex flex-col items-center justify-center p-4 border rounded-lg hover:bg-gray-100 cursor-pointer">
                   <div className="text-2xl font-bold mb-2">{item.icon}</div>
                   <div className="text-sm font-medium">{item.label}</div>

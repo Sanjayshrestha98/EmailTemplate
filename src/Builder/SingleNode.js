@@ -3,6 +3,7 @@ import ParagraphElem from './Elements/ParagraphElem';
 import { BuilderContext } from '../context/BuilderContext';
 import { mouseOver } from '../utils/HoverToggle/MouseOver';
 import { mouseLeave } from '../utils/HoverToggle/MouseLeave';
+import TitleElem from './Elements/TitleElem';
 
 function SingleNode({ data, width, rowid }) {
 
@@ -17,6 +18,8 @@ function SingleNode({ data, width, rowid }) {
         switch (type) {
             case 'paragraph':
                 return <ParagraphElem data={data} />
+            case 'title':
+                return <TitleElem data={data} />
             default:
                 break;
         }

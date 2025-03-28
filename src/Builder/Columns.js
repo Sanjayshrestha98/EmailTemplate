@@ -6,15 +6,13 @@ import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
 function Columns({ data, rowStyles, rowid }) {
 
     const { rootState } = React.useContext(BuilderContext)
+
     const { isOver, setNodeRef } = useDroppable({
         id: data?.id,
+        data: {
+            rowid: rowid
+        }
     });
-
-    const handleDragEnd = (event) => {
-        const { active, over } = event;
-        console.log('active', active)
-        console.log('over', over)
-    };
 
     return (
         <div
@@ -36,18 +34,18 @@ function Columns({ data, rowStyles, rowid }) {
                 borderBottom: `${data?.styles?.borderBottom.width}px ${data?.styles?.borderBottom.type} ${data?.styles?.borderBottom.color}`,
             }}
             className={`  `}>
-            <div>
+            <div ref={setNodeRef} className={`${isOver ? "outline-dashed outline-blue-500" : ""}`}>
                 {
                     data?.content?.length > 0 ?
                         data?.content?.map((value) => {
-                            return <SingleNode rowid={rowid} key={value?.id} data={value} width={`${(rootState?.width / 12) * data?.span}px`} />
+                            return <SingleNode rowid={rowid} key={value?.id} data={value}
+                            // width={`${(rootState?.width / 12) * data?.span}px`}
+                            />
                         })
                         :
                         <div
-                            ref={setNodeRef}
                             style={{
                                 backgroundColor: isOver ? "#f0f0f0" : "#fff",
-
                                 width: '100%',
                                 height: '100%',
                                 display: 'flex',
