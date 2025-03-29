@@ -4,6 +4,7 @@ import { DragOverlay, useDraggable } from '@dnd-kit/core';
 import Settings from './SideBarTabs/Settings';
 import { BuilderContext } from '../context/BuilderContext';
 import { v1 as uuidv1 } from 'uuid';
+import SingleElementProperties from './SideBarTabs/AfterSelection/SingleNodeProperties/SingleElementProperties';
 
 function Draggable(props) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -25,7 +26,7 @@ function Draggable(props) {
 
 function SideControls(props) {
 
-  const { rootState, selectedTab, setSelectedTab, setSelectedRow, selectedRow, setSelectedNode } = useContext(BuilderContext)
+  const { rootState, selectedTab, selectedNode, setSelectedTab, setSelectedRow, selectedRow, setSelectedNode } = useContext(BuilderContext)
 
   const items = [
     {
@@ -56,10 +57,11 @@ function SideControls(props) {
   // const { attributes, listeners, setNodeRef, transform } = useDraggable({
   //   id: 'draggable',
   // });
-
+  
   const [isDragging, setIsDragging] = useState(false);
   const [activeId, setActiveId] = useState(null);
-
+  
+  console.log('selectedNode', selectedNode)
   function handleDragStart(event) {
     setActiveId(event.active.id);
   }
@@ -91,30 +93,36 @@ function SideControls(props) {
           </button>
         ))}
       </div>
-
       <div className=" ">
         {selectedTab === 'content' && (
-          <div className="grid grid-cols-3 p-4 gap-4">
+          <>
+            {selectedNode ? (
+              <SingleElementProperties />
+            ) :
+              <div className="grid grid-cols-3 p-4 gap-4">
 
-            {items.map((item, index) => (
-              <Draggable id={item.id} key={item.id} data={item} >
-                <div className="flex flex-col items-center justify-center p-4 border rounded-lg hover:bg-gray-100 cursor-pointer">
-                  <div className="text-2xl font-bold mb-2">{item.icon}</div>
-                  <div className="text-sm font-medium">{item.label}</div>
-                </div>
-              </Draggable>
-            ))}
+                {items.map((item, index) => (
+                  <Draggable id={item.id} key={item.id} data={item} >
+                    <div className="flex flex-col items-center justify-center p-4 border rounded-lg hover:bg-gray-100 cursor-pointer">
+                      <div className="text-2xl font-bold mb-2">{item.icon}</div>
+                      <div className="text-sm font-medium">{item.label}</div>
+                    </div>
+                  </Draggable>
+                ))}
 
-            <DragOverlay>
-              {activeId ? (
-                <div className="flex flex-col items-center justify-center p-4 border rounded-lg hover:bg-gray-100 cursor-pointer">
-                  <div className="text-2xl font-bold mb-2">`Item ${activeId}`</div>
-                  {/* <div className="text-sm font-medium">{item.label}</div> */}
-                </div>
-              ) : null}
-            </DragOverlay>
+                <DragOverlay>
+                  {activeId ? (
+                    <div className="flex flex-col items-center justify-center p-4 border rounded-lg hover:bg-gray-100 cursor-pointer">
+                      <div className="text-2xl font-bold mb-2">`Item ${activeId}`</div>
+                      {/* <div className="text-sm font-medium">{item.label}</div> */}
+                    </div>
+                  ) : null}
+                </DragOverlay>
 
-          </div>
+              </div>
+            }
+
+          </>
         )}
         {selectedTab === 'rows' && (
           <RowsSelector />

@@ -4,6 +4,7 @@ import { BuilderContext } from '../context/BuilderContext';
 import { mouseOver } from '../utils/HoverToggle/MouseOver';
 import { mouseLeave } from '../utils/HoverToggle/MouseLeave';
 import TitleElem from './Elements/TitleElem';
+import { Trash } from 'lucide-react';
 
 function SingleNode({ data, width, rowid, columnid }) {
 
@@ -46,11 +47,18 @@ function SingleNode({ data, width, rowid, columnid }) {
             }}>
 
             <div className={`absolute top-0 text-xs bg-blue-600 right-0 w-fit px-2  text-white capitalize ${selectedNode && selectedNode?.id === data?.id ? ' hidden' : 'group-hover:block hidden'}`}>{data?.type}</div>
-            <div className='absolute bottom-full text-xs bg-blue-600 right-0 w-fit px-2 text-white capitalize'>{selectedNode && selectedNode?.id === data?.id ?
+            <div className='absolute bottom-full text-xs bg-blue-600 flex gap-2 right-0 w-fit px-2 text-white capitalize'>{selectedNode && selectedNode?.id === data?.id ?
                 <>
                     <button className='text-white' onClick={() => {
                         deleteItemFromColumn(rowid, columnid, data?.id)
-                    }}>Delete</button>
+                    }}>
+                        <Trash size={16} />
+                    </button>
+                    <button className='text-white' onClick={() => {
+                        deleteItemFromColumn(rowid, columnid, data?.id)
+                    }}>
+                        <Trash size={16} />
+                    </button>
                 </>
                 : ''}</div>
 
